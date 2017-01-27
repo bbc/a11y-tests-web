@@ -1,0 +1,16 @@
+{
+  "name": "tviplayer-a11y-tests",
+  "version": "1.0.0",
+  "description": "Uses bbc-a11y to run automated tests around accessibility on the iPlayer website",
+  "main": "index.js",
+  "scripts": {
+    "build": "node gen-a11y.js",
+    "start": "npm run build && bbc-a11y",
+    "start:interactive": "npm run build && bbc-a11y --interactive"
+  },
+  "author": "Andy Smith",
+  "license": "BBC",
+  "dependencies": {
+    "bbc-a11y": "^1.1.0"
+  }
+}
