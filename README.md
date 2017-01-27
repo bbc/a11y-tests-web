@@ -1,6 +1,6 @@
 # tviplayer-a11y-tests
 
-Uses [https://github.com/bbc/bbc-a11y](bbc-a11y) to run a suite of automated tests to test accessibility across the iPlayer website.
+Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) to run a suite of automated tests to test accessibility across the iPlayer website.
 
 ## Installation
 
