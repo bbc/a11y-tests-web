@@ -22,7 +22,6 @@
 /iplayer/group/most-popular
 /bbcfour/collections
 /iplayer/features/accessibility
-/iplayer/features/bafta-awards
 /iplayer/features/buy-and-keep
 /iplayer/features/downloads
 /iplayer/features/iplayer-kids
