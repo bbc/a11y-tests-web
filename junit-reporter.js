@@ -22,7 +22,7 @@ JUnitReport.prototype.pageChecked = function(page, validationResult) {
 
     if (standardResult.errors.length > 0) {
       var errors = standardResult.errors.map(prettyErrorOutput)
-      testcase.failure('Error on [ ' + page.url + ' ]: ' + errors.join('') + 'More info at ' + docsUrl)
+      testcase.failure('Error on ' + page.url + errors.join('') + '\nMore info at ' + docsUrl)
     }
   })
 }
