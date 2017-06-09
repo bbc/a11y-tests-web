@@ -33,3 +33,19 @@ To explore the test errors, you can run bbc-a11y in interactive mode:
 ```
 npm run start:interactive
 ```
+
+### Generate a JUnit report
+
+To generate a JUnit report, you can tell bbc-a11y to use the JUnit reporter:
+
+```
+npm run start:junit
+```
+
+### Generate a JUnit report using Docker
+
+If you don't have all the necessary libraries on your system required to run Electron, for example if you want to run this on a CI server, you can run the bbc-a11y tests inside a Docker container:
+
+```
+npm run start:ci
+```
