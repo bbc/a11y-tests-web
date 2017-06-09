@@ -14,6 +14,6 @@ function pathToOutput(path) {
   const baseUrl = process.env.A11Y_BASE_URL || "http://www.bbc.co.uk";
   return `
     page("${baseUrl}${path}", {
-      hide: ['orb']
+      hide: ['orb', 'bbccookies-prompt']
     })`;
 }
