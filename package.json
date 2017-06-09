@@ -7,7 +7,8 @@
     "build": "node gen-a11y.js",
     "start": "npm run build && bbc-a11y",
     "start:interactive": "npm run build && bbc-a11y --interactive",
-    "start:junit": "npm run build && bbc-a11y --reporter ./junit-reporter.js"
+    "start:junit": "npm run build && bbc-a11y --reporter ./junit-reporter.js",
+    "start:ci": "docker run --rm --tty --volume $PWD:/ws wildlyinaccurate/bbc-a11y-docker --config /ws/a11y.js --reporter /ws/junit-reporter.js"
   },
   "author": "Andy Smith",
   "license": "BBC",
