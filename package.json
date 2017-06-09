@@ -6,11 +6,15 @@
   "scripts": {
     "build": "node gen-a11y.js",
     "start": "npm run build && bbc-a11y",
-    "start:interactive": "npm run build && bbc-a11y --interactive"
+    "start:interactive": "npm run build && bbc-a11y --interactive",
+    "start:junit": "npm run build && bbc-a11y --reporter ./junit-reporter.js"
   },
   "author": "Andy Smith",
   "license": "BBC",
   "dependencies": {
+    "junit-report-builder": "^1.1.1"
+  },
+  "devDependencies": {
     "bbc-a11y": "^1.1.0"
   }
 }
