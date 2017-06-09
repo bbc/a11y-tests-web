@@ -10,6 +10,7 @@
 /tv/bbcparliament
 /tv/bbcalba
 /tv/s4c
+/iplayer/episode/p04qh1gk/face-to-face-dame-edith-sitwell
 /iplayer/categories/arts/highlights
 /iplayer/categories/arts/all?sort=atoz
 /iplayer/categories/arts/all?sort=dateavailable
@@ -22,10 +23,10 @@
 /iplayer/group/most-popular
 /bbcfour/collections
 /iplayer/features/accessibility
-/iplayer/features/buy-and-keep
 /iplayer/features/downloads
 /iplayer/features/iplayer-kids
 /iplayer/features/my-programmes
 /iplayer/features/sign-in
 /iplayer/features/30-days
 /tv
+/iplayer/ideas/full-series
