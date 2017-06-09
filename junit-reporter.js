@@ -21,7 +21,7 @@ JUnitReport.prototype.pageChecked = function(page, validationResult) {
     var testcase = suite.testCase().className(suiteName).name(testName)
 
     if (standardResult.errors.length > 0) {
-      var errors = standardResult.errors.map(mapErrors)
+      var errors = standardResult.errors.map(prettyErrorOutput)
       testcase.failure('Error on [ ' + page.url + ' ]: ' + errors.join('') + 'More info at ' + docsUrl)
     }
   })
@@ -53,9 +53,9 @@ JUnitReport.prototype.log = function(message) {
   this.commandLineConsole.log(message)
 }
 
-function mapErrors(error) {
+function prettyErrorOutput(error) {
   var errorDetails = (error[1] && error[1].xpath) || ''
-  return error[0] + ' ' + errorDetails + '\n             '
+  return '\n' + error[0] + ' ' + errorDetails
 }
 
 module.exports = JUnitReport
