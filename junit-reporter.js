@@ -55,7 +55,7 @@ JUnitReport.prototype.log = function(message) {
 
 function mapErrors(error) {
   var errorDetails = (error[1] && error[1].xpath) || ''
-  return error[0] + ' ' + errorDetails + '             '
+  return error[0] + ' ' + errorDetails + '\n             '
 }
 
 module.exports = JUnitReport
