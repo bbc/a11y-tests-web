@@ -10,16 +10,20 @@ JUnitReport.prototype.runStarted = function() {
 }
 
 JUnitReport.prototype.pageChecked = function(page, validationResult) {
-  var suite = builder.testSuite().name('bbc-a11y')
+  var suiteName = page.url;
+  suiteName = suiteName.replace(/.*?:\/\//g, "").replace('\/', './');
+  var suite = builder.testSuite().name(suiteName)
 
   validationResult.results.forEach(function(standardResult) {
     var standard = standardResult.standard
     var testName = standard.section.title + ': ' + standard.name
     var docsUrl = standard.section.documentationUrl
-    var testcase = suite.testCase().className(page.url).name(testName + ' -- ' + docsUrl)
-    standardResult.errors.forEach(function (error) {
-      testcase.failure(error.map(function(part) { return part.xpath ? part.xpath : part.toString() } ).join(' '))
-    })
+    var testcase = suite.testCase().className(suiteName).name(testName)
+
+    if (standardResult.errors.length > 0) {
+      var errors = standardResult.errors.map(mapErrors)
+      testcase.failure('Error on [ ' + page.url + ' ]: ' + errors.join('') + 'More info at ' + docsUrl)
+    }
   })
 }
 
@@ -47,6 +51,11 @@ JUnitReport.prototype.configError = function(error) {
 
 JUnitReport.prototype.log = function(message) {
   this.commandLineConsole.log(message)
+}
+
+function mapErrors(error) {
+  var errorDetails = (error[1] && error[1].xpath) || ''
+  return error[0] + ' ' + errorDetails + '             '
 }
 
 module.exports = JUnitReport
