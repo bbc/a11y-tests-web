@@ -11,8 +11,7 @@ const a11yOutput = paths.reduce((acc, cur) => acc + pathToOutput(baseUrl, cur), 
 
 fs.writeFileSync(A11Y_JS_FILE, a11yOutput);
 
-console.log("Base URL: " + baseUrl);
-console.log("Paths: " + paths.join(", "));
+console.log(`Tests will run against: ${baseUrl} ${paths.join(" ")}`);
 
 function pathToOutput(baseUrl, path) {
   return `
