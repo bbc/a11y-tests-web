@@ -18,6 +18,14 @@ npm start
 
 This will generate the commands for bbc-a11y and then run the tests against the pages listed in paths.txt against http://www.bbc.co.uk.
 
+### Sign in to BBC ID before running the tests
+
+If you want the tests to be run against the pages for a signed in user, you can set the `A11Y_USERNAME` and `A11Y_PASSWORD` environment variables to a valid BBC ID username and password, e.g:
+
+```
+A11Y_USERNAME=joe.bloggs@gmail.com A11Y_PASSWORD=myiplayerpassword npm run start
+```
+
 ### Run against a different environment
 
 If you want to run against a different environment, you can set the environment variable `A11Y_BASE_URL`, e.g.:
