@@ -26,7 +26,7 @@ function pathToOutput(baseUrl, path) {
   return `
     page("${url}", {
       ${setupSteps}
-      hide: ['orb', 'bbccookies-prompt']
+      hide: ['orb', 'bbccookies-prompt', '/html/head/iframe']
     })`;
 }
 
