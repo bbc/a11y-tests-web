@@ -29,4 +29,3 @@
 /iplayer/features/sign-in
 /iplayer/features/30-days
 /tv
-/iplayer/ideas/full-series
