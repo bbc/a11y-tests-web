@@ -26,7 +26,10 @@ function pathToOutput(baseUrl, path) {
   return `
     page("${url}", {
       ${setupSteps}
-      hide: ['orb', 'bbccookies-prompt', '/html/head/iframe', 'smphtml5iframebbcMediaPlayer']
+      hide: ['orb', 'bbccookies-prompt', '/html/head/iframe', 'smphtml5iframebbcMediaPlayer'],
+      skip: [
+        'Title attributes: Title attributes only on inputs'
+      ]
     })`;
 }
 
