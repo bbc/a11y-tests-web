@@ -3,6 +3,7 @@ const path = require('path');
 
 const PATHS_FILE = 'paths.txt';
 const A11Y_JS_FILE = 'a11y.js';
+const CHANNEL_NAV_SELECTOR = 'tvip-channels-stream-inner';
 
 const baseUrl = (process.env.A11Y_BASE_URL || "http://www.bbc.co.uk").trim();
 const pathsContents = getPathsContent();
@@ -26,9 +27,10 @@ function pathToOutput(baseUrl, path) {
   return `
     page("${url}", {
       ${setupSteps}
-      hide: ['orb', 'bbccookies-prompt', '/html/head/iframe', 'smphtml5iframebbcMediaPlayer'],
+      hide: ['orb', 'bbccookies-prompt', '/html/head/iframe', 'smphtml5iframebbcMediaPlayer', "${CHANNEL_NAV_SELECTOR}"],
       skip: [
-        'Title attributes: Title attributes only on inputs'
+        'Title attributes: Title attributes only on inputs',
+        'Tables: Use tables for data'
       ]
     })`;
 }
