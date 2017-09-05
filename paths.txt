@@ -28,4 +28,5 @@
 /iplayer/features/my-programmes
 /iplayer/features/sign-in
 /iplayer/features/30-days
+/iplayer/features/downloads-beta
 /tv
