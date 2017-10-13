@@ -6,9 +6,7 @@ const A11Y_JS_FILE = 'a11y.js';
 const CHANNEL_NAV_SELECTOR = 'tvip-channels-stream-inner';
 
 const baseUrl = (process.env.A11Y_BASE_URL || "http://www.bbc.co.uk").trim();
-const pathsContents = getPathsContent();
-const paths = pathsContents
-  .split('\n')
+const paths = getPaths()
   .map(sanitisePath)
   .filter((value) => value !== '');
 
@@ -35,8 +33,12 @@ function pathToOutput(baseUrl, path) {
     })`;
 }
 
-function getPathsContent() {
-  return process.env.A11Y_PATHS || fs.readFileSync(PATHS_FILE, { encoding: 'utf-8' });
+function getPaths() {
+  if (process.env.A11Y_PATHS) {
+    return process.env.A11Y_PATHS.split(',');
+  }
+
+  return fs.readFileSync(PATHS_FILE, { encoding: 'utf-8' }).split('\n');
 }
 
 function sanitisePath(path) {
