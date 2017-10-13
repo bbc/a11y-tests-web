@@ -36,12 +36,10 @@ A11Y_BASE_URL=http://www.test.bbc.co.uk npm start
 
 ### Run against a different set of pages
 
-If you want to run against a set of pages other than the hard-coded default, you can set the environment variable `A11Y_PATHS` to a line break delimited list of paths, e.g.:
+If you want to run against a set of pages other than the hard-coded default, you can set the environment variable `A11Y_PATHS` to a comma delimited list of paths, e.g.:
 
 ```
-A11Y_PATHS="/bbcone
-/bbctwo
-/tv/bbcthree" npm start
+A11Y_PATHS="/bbcone,/bbctwo,/tv/bbcthree" npm start
 ```
 
 ### Run in interactive mode
