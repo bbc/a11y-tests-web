@@ -20,7 +20,7 @@
 /iplayer/a-z/a
 /iplayer/guide
 /iplayer/watching
-/iplayer/group/most-popular
+/iplayer/most-popular
 /bbcfour/collections
 /iplayer/features/accessibility
 /iplayer/features/downloads
