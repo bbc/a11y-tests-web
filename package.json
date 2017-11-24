@@ -4,18 +4,17 @@
   "description": "Uses bbc-a11y to run automated tests around accessibility on the iPlayer website",
   "main": "index.js",
   "scripts": {
-    "build": "node gen-a11y.js",
-    "start": "npm run build && bbc-a11y",
-    "start:interactive": "npm run build && bbc-a11y --interactive",
-    "start:junit": "npm run build && bbc-a11y --reporter ./junit-reporter.js",
-    "start:ci": "npm run build && docker run --rm --tty --volume $PWD:/ws wildlyinaccurate/bbc-a11y-docker --config /ws/a11y.js --reporter /ws/junit-reporter.js"
+    "build:bbc-a11y": "node build-bbc-a11y.js",
+    "clean:bbc-a11y": "node clean-bbc-a11y.js",
+    "start:bbc-a11y": "npm run build:bbc-a11y && bbc-a11y && npm run clean:bbc-a11y",
+    "start:bbc-a11y:interactive": "npm run build:bbc-a11y && bbc-a11y --interactive && npm run clean:bbc-a11y",
+    "start:bbc-a11y:junit": "npm run build:bbc-a11y && bbc-a11y --reporter ./lib/junit-reporter.js && npm run clean:bbc-a11y",
+    "start:bbc-a11y:ci": "npm run build:bbc-a11y && bash -c \"docker run --rm --tty --volume $PWD:/ws wildlyinaccurate/bbc-a11y-docker --config /ws/a11y.js --reporter /ws/lib/junit-reporter.js; exit 0;\" && npm run clean:bbc-a11y"
   },
   "author": "Andy Smith",
   "license": "BBC",
   "dependencies": {
-    "junit-report-builder": "^1.1.1"
-  },
-  "devDependencies": {
+    "junit-report-builder": "^1.1.1",
     "bbc-a11y": "^1.3.4"
   }
 }
