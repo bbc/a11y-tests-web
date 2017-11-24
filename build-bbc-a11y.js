@@ -7,36 +7,18 @@ const config = getConfig(configName);
 const baseUrl = config.baseUrl || 'http://www.bbc.co.uk';
 const paths = config.paths || [];
 const signedInPaths = getSignedInPaths();
+
+if (!paths.length && !signedInPaths.length) {
+  logger.error(`No paths listed in the config for ${configName}`);
+  process.exit(1);
+}
+
 const signedOutOutput = pathsToOutput(baseUrl, paths, config.options);
 const signedInOutput = pathsToOutput(baseUrl, signedInPaths, config.options, true);
 const a11yOutput = `
   ${signedOutOutput}
   ${signedInOutput}
 `;
-
-function pathsToOutput(baseUrl, paths, options, signedIn = false) {
-  return paths.reduce(
-    (acc, path) => acc + pathToOutput(baseUrl, path, options, signedIn),
-    ''
-  );
-}
-
-function getSignInCredentials() {
-  const { A11Y_USERNAME: username, A11Y_PASSWORD: password } = process.env;
-  return { username, password };
-}
-
-function getSignedInPaths() {
-  const paths = config.signedInPaths || [];
-
-  const { username, password } = getSignInCredentials();
-  if (paths.length && (!username || !password)) {
-    logger.warning('Skipping signed in paths because a username and/or password were not specified. (Use A11Y_USERNAME and A11Y_PASSWORD environment variables to set them)');
-    return [];
-  }
-
-  return paths;
-}
 
 fs.writeFileSync('a11y.js', a11yOutput);
 
@@ -58,7 +40,7 @@ function getConfig(configName) {
   try {
     return require(`./config/bbc-a11y/${configName}`);
   } catch (e) {
-    logger.error(`Could not find a bbc-a11y config named ${configName}.`);
+    logger.error(`Could not find a bbc-a11y config named ${configName}`);
     process.exit(1);
   }
 }
@@ -98,4 +80,28 @@ function getVisitOption(baseUrl, path, signedIn) {
   }
 
   return '';
+}
+
+function pathsToOutput(baseUrl, paths, options, signedIn = false) {
+  return paths.reduce(
+    (acc, path) => acc + pathToOutput(baseUrl, path, options, signedIn),
+    ''
+  );
+}
+
+function getSignInCredentials() {
+  const { A11Y_USERNAME: username, A11Y_PASSWORD: password } = process.env;
+  return { username, password };
+}
+
+function getSignedInPaths() {
+  const paths = config.signedInPaths || [];
+
+  const { username, password } = getSignInCredentials();
+  if (paths.length && (!username || !password)) {
+    logger.warning('Skipping signed in paths because a username and/or password were not specified. (Use A11Y_USERNAME and A11Y_PASSWORD environment variables to set them)');
+    return [];
+  }
+
+  return paths;
 }

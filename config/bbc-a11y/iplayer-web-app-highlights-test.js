@@ -1,4 +1,4 @@
-const { options } = require('./iplayer-web-all');
+const { options } = require('./iplayer-web-common');
 
 module.exports = {
   options,
