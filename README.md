@@ -1,6 +1,6 @@
 # iplayer-web-a11y-tests
 
-Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) to run a suite of automated tests to test accessibility across a set of webpages.
+Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) to run a suite of automated tests to test accessibility across a set of webpages, defined in a config file.
 
 ## Installation
 
@@ -41,3 +41,17 @@ If you don't have all the necessary libraries on your system required to run Ele
 ```
 BBC_A11Y_CONFIG=iplayer-web-all npm run start:bbc-a11y:ci
 ```
+
+## Creating a config
+
+### bbc-a11y
+
+Create a new file in config/bbc-a11y. It should either be a JSON file or a JS file that exports an object.
+
+The data should include:
+- `options` - Object - Options as defined by bbc-a11y, e.g. hide and skip
+- `baseUrl` - String - The domain to run the tests against, e.g. "https://www.bbc.co.uk"
+- `paths` - Array - The paths on that domain to run the tests against
+- `signedInPaths` - Array - An optional list of paths to run the tests against, after signing in to BBC ID. 
+
+Note that if you have a list of `signedInPaths`, the username and password to use when logging in to BBC ID should be specified using the environment variables A11Y_USERNAME and A11Y_PASSWORD.
