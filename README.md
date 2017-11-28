@@ -1,4 +1,4 @@
-# iplayer-web-a11y-tests
+# a11y-tests-web
 
 Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) to run a suite of automated tests to test accessibility across a set of webpages, defined in a config file.
 
@@ -10,7 +10,7 @@ npm install
 
 ## Usages
 
-### e.g. Run bbc-a11y using the iPlayer Web config
+### Run bbc-a11y using a config, e.g. iplayer-web-all
 
 ```
 BBC_A11Y_CONFIG=iplayer-web-all npm start:bbc-a11y
