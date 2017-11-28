@@ -18,7 +18,7 @@ BBC_A11Y_CONFIG=iplayer-web-all npm start:bbc-a11y
 
 This will generate the commands for bbc-a11y and then run the tests against the pages listed in the iplayer-web-all config file in config/bbc-a11y
 
-### Run with GUI
+### Run in interactive mode
 
 To explore the test errors, you can run bbc-a11y in interactive mode:
 
@@ -32,14 +32,6 @@ To generate a JUnit report, you can tell bbc-a11y to use the JUnit reporter:
 
 ```
 BBC_A11Y_CONFIG=iplayer-web-all npm run start:bbc-a11y:junit
-```
-
-### Generate a JUnit report with GUI
-
-To generate a JUnit report and explore the test errors visually, you can tell bbc-a11y to use the JUnit reporter and run in interactive mode:
-
-```
-BBC_A11Y_CONFIG=iplayer-web-all npm run start:bbc-a11y:junit-interactive
 ```
 
 ### Generate a JUnit report using Docker
