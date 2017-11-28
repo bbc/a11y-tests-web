@@ -1,7 +1,7 @@
 {
-  "name": "iplayer-web-a11y-tests",
+  "name": "@bbc/a11y-tests-web",
   "version": "1.0.0",
-  "description": "Uses bbc-a11y to run automated tests around accessibility on the iPlayer website",
+  "description": "Runs automated accessibility tests on a set of pages",
   "main": "index.js",
   "scripts": {
     "build:bbc-a11y": "node build-bbc-a11y.js",
@@ -11,7 +11,8 @@
     "start:bbc-a11y:junit": "npm run build:bbc-a11y && bbc-a11y --reporter ./lib/junit-reporter.js && npm run clean:bbc-a11y",
     "start:bbc-a11y:ci": "npm run build:bbc-a11y && bash -c \"docker run --rm --tty --volume $PWD:/ws wildlyinaccurate/bbc-a11y-docker --config /ws/a11y.js --reporter /ws/lib/junit-reporter.js; exit 0;\" && npm run clean:bbc-a11y"
   },
-  "author": "Andy Smith",
+  "private": true,
+  "author": "Andy Smith <andy.smith04@bbc.co.uk>",
   "license": "BBC",
   "dependencies": {
     "junit-report-builder": "^1.1.1",
