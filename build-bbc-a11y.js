@@ -1,5 +1,6 @@
+'use strict';
+
 const fs = require('fs');
-const path = require('path');
 const logger = require('./lib/colourfulLog');
 
 const configName = getConfigName();
@@ -22,8 +23,8 @@ const a11yOutput = `
 
 fs.writeFileSync('a11y.js', a11yOutput);
 
-logger.log(`Tests will run against: ${baseUrl.replace(/(https?:\/\/)/, '')} ${paths.join(" ")}`);
-logger.log(`Tests will run signed in against: ${baseUrl.replace(/(https?:\/\/)/, '')} ${signedInPaths.join(" ")}`);
+logger.log(`Tests will run against: ${baseUrl.replace(/(https?:\/\/)/, '')} ${paths.join(' ')}`);
+logger.log(`Tests will run signed in against: ${baseUrl.replace(/(https?:\/\/)/, '')} ${signedInPaths.join(' ')}`);
 
 function getConfigName() {
   const configName = process.env.BBC_A11Y_CONFIG;
@@ -76,7 +77,7 @@ function getVisitOption(baseUrl, path, signedIn) {
           frame.onload = test
         }
       })
-    },`
+    },`;
   }
 
   return '';
