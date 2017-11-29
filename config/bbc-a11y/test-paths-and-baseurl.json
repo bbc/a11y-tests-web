@@ -1,0 +1,7 @@
+{
+  "baseUrl": "http://base.url",
+  "paths": [
+    "/path/1",
+    "/path/2"
+  ]
+}
