@@ -2,6 +2,10 @@
 
 Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) to run a suite of automated tests to test accessibility across a set of webpages, defined in a config file.
 
+## Requirements
+- Node v6 or above
+- Docker (if using the `ci` option)
+
 ## Installation
 
 ```
@@ -49,6 +53,15 @@ If you don't have all the necessary libraries on your system required to run Ele
 ```
 BBC_A11Y_CONFIG=iplayer-web-all npm run start:bbc-a11y:ci
 ```
+
+## Running on Jenkins
+
+If you'd like to run this on your Jenkins server, ensure your Jenkins meets the requirements above and has the [JUnit plugin](https://plugins.jenkins.io/junit) installed and then:
+- Create a Jenkins job
+- Add this repo to the Jenkins job
+- Get the job to run `npm i --production`
+- Get the job to run the `start:bbc-a11y:ci` command as outlined above with your `BBC_A11Y_CONFIG`
+- Add a post-build action to "Publish JUnit test results report". The XML file is called "bbc-a11y-report.xml".
 
 ## Creating a config
 
