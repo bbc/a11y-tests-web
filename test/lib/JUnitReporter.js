@@ -10,6 +10,31 @@ const JUnitReporter = require('../../lib/jUnitReporter');
 const commandLineConsole = {
   log: () => {}
 };
+const SOME_RESULTS = [
+  {
+    standard: {
+      section: {
+        title: 'Title 1',
+        documentationUrl: "http://documentation.url/1"
+      },
+      name: 'Standard name 1'
+    }
+  },
+  {
+    standard: {
+      section: {
+        title: 'Title 2',
+        documentationUrl: "http://documentation.url/2"
+      },
+      name: 'Standard name 2'
+    },
+    errors: [
+      [ 'An error message', { xpath: 'An/x/path' } ],
+      [ 'Another error message' ],
+    ]
+  }
+];
+let fakeReportBuilderTestSuite;
 
 function getJunitReporter() {
   return new JUnitReporter(() => {}, commandLineConsole)
@@ -18,8 +43,17 @@ function getJunitReporter() {
 describe('JUnit Reporter', () => {
 
   beforeEach(() => {
+    fakeReportBuilderTestSuite = {
+      name: sandbox.stub(),
+      testCase: sandbox.stub().returns({
+        className: sandbox.stub(),
+        name: sandbox.stub(),
+        failure: sandbox.stub()
+      })
+    };
     sandbox.stub(commandLineConsole, 'log');
     sandbox.stub(builder, 'build').returns('Built report');
+    sandbox.stub(builder, 'testSuite').returns(fakeReportBuilderTestSuite);
     sandbox.stub(fs, 'writeFileSync');
   });
 
@@ -38,6 +72,46 @@ describe('JUnit Reporter', () => {
 
   describe('pageChecked()', () => {
 
+    it('creates a test suite with the URL converted to a package name', () => {
+      const page = { url: 'https://www.bbc.co.uk/product' };
+      const results = [];
+      const result = { results };
+      const junitReporter = getJunitReporter();
+
+      junitReporter.pageChecked(page, result);
+
+      sandbox.assert.calledWith(fakeReportBuilderTestSuite.name, 'www.bbc.co.uk./product');
+    });
+
+    it('creates a test class for each result', () => {
+      const page = { url: 'https://www.bbc.co.uk/product' };
+      const result = { results: SOME_RESULTS };
+      const junitReporter = getJunitReporter();
+
+      junitReporter.pageChecked(page, result);
+
+      sandbox.assert.calledTwice(fakeReportBuilderTestSuite.testCase);
+      sandbox.assert.alwaysCalledWith(fakeReportBuilderTestSuite.testCase().className, 'www.bbc.co.uk./product');
+      sandbox.assert.calledWith(fakeReportBuilderTestSuite.testCase().name, 'Title 1: Standard name 1');
+      sandbox.assert.calledWith(fakeReportBuilderTestSuite.testCase().name, 'Title 2: Standard name 2');
+    });
+
+    it('reports the failure if there are errors', () => {
+      const page = { url: 'https://www.bbc.co.uk/product' };
+      const result = { results: SOME_RESULTS };
+      const junitReporter = getJunitReporter();
+
+      junitReporter.pageChecked(page, result);
+
+      sandbox.assert.calledOnce(fakeReportBuilderTestSuite.testCase().failure);
+      sandbox.assert.calledWith(
+        fakeReportBuilderTestSuite.testCase().failure,
+        'Error on https://www.bbc.co.uk/product\n' +
+        'An error message An/x/path\n' +
+        'Another error message \n' +
+        'More info at http://documentation.url/2'
+      );
+    });
   });
 
   describe('pagePassed()', () => {
