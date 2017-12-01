@@ -15,7 +15,7 @@ const SOME_RESULTS = [
     standard: {
       section: {
         title: 'Title 1',
-        documentationUrl: "http://documentation.url/1"
+        documentationUrl: 'http://documentation.url/1'
       },
       name: 'Standard name 1'
     }
@@ -24,20 +24,20 @@ const SOME_RESULTS = [
     standard: {
       section: {
         title: 'Title 2',
-        documentationUrl: "http://documentation.url/2"
+        documentationUrl: 'http://documentation.url/2'
       },
       name: 'Standard name 2'
     },
     errors: [
-      [ 'An error message', { xpath: 'An/x/path' } ],
-      [ 'Another error message' ],
+      ['An error message', { xpath: 'An/x/path' }],
+      ['Another error message']
     ]
   }
 ];
 let fakeReportBuilderTestSuite;
 
 function getJunitReporter() {
-  return new JUnitReporter(() => {}, commandLineConsole)
+  return new JUnitReporter(() => {}, commandLineConsole);
 }
 
 describe('JUnit Reporter', () => {
