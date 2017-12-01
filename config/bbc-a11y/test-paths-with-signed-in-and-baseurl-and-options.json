@@ -1,0 +1,14 @@
+{
+  "baseUrl": "http://base.url",
+  "paths": [
+    "/path/1",
+    "/path/2"
+  ],
+  "signedInPaths": [
+    "/path/3",
+    "/path/4"
+  ],
+  "options": {
+    "some": "option"
+  }
+}
