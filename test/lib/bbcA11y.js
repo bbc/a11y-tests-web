@@ -72,7 +72,7 @@ describe('bbcA11y', () => {
         process.env.BBC_A11Y_CONFIG = 'this-is-not-a-valid-config';
         bbcA11y.build();
 
-        sandbox.assert.calledWith(colourfulLog.error, 'Could not find a config named this-is-not-a-valid-config');
+        sandbox.assert.calledWith(colourfulLog.error, 'Could not find a valid config named this-is-not-a-valid-config');
       });
 
       it('exits with status code 1', () => {

@@ -1,6 +1,6 @@
 'use strict';
 
-const { options } = require('./iplayer-web-common');
+const { options } = require('./common');
 
 module.exports = {
   options,
