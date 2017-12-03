@@ -55,7 +55,7 @@ describe('bbcA11y', () => {
       it('logs the error message about no config', () => {
         bbcA11y.build();
 
-        sandbox.assert.calledWith(colourfulLog.error, 'No bbc-a11y config selected. Use the BBC_A11Y_CONFIG environment variable to set one.');
+        sandbox.assert.calledWith(colourfulLog.error, 'No config selected. Use the BBC_A11Y_CONFIG environment variable to set one.');
       });
 
       it('exits with status code 1', () => {
@@ -72,7 +72,7 @@ describe('bbcA11y', () => {
         process.env.BBC_A11Y_CONFIG = 'this-is-not-a-valid-config';
         bbcA11y.build();
 
-        sandbox.assert.calledWith(colourfulLog.error, 'Could not find a bbc-a11y config named this-is-not-a-valid-config');
+        sandbox.assert.calledWith(colourfulLog.error, 'Could not find a config named this-is-not-a-valid-config');
       });
 
       it('exits with status code 1', () => {
@@ -87,14 +87,14 @@ describe('bbcA11y', () => {
     describe('No paths in the config', () => {
 
       it('logs the error message about no paths', () => {
-        process.env.BBC_A11Y_CONFIG = 'test-no-paths';
+        process.env.BBC_A11Y_CONFIG = 'test/no-paths';
         bbcA11y.build();
 
-        sandbox.assert.calledWith(colourfulLog.error, 'No paths listed in the config for test-no-paths');
+        sandbox.assert.calledWith(colourfulLog.error, 'No paths listed in the config for test/no-paths');
       });
 
       it('exits with status code 1', () => {
-        process.env.BBC_A11Y_CONFIG = 'test-no-paths';
+        process.env.BBC_A11Y_CONFIG = 'test/no-paths';
         bbcA11y.build();
 
         sandbox.assert.calledWith(process.exit, 1);
@@ -105,7 +105,7 @@ describe('bbcA11y', () => {
     describe('Paths but no baseUrl or options', () => {
 
       it('outputs the basic config for the paths, with the baseUrl set to http://www.bbc.co.uk', () => {
-        process.env.BBC_A11Y_CONFIG = 'test-just-paths';
+        process.env.BBC_A11Y_CONFIG = 'test/just-paths';
         const expectedOutput = `
           page( "http://www.bbc.co.uk/path/1", { } )
           page( "http://www.bbc.co.uk/path/2", { } )
@@ -126,7 +126,7 @@ describe('bbcA11y', () => {
     describe('Paths and baseUrl but no options', () => {
 
       it('outputs the basic config for the paths, with the defined baseUrl', () => {
-        process.env.BBC_A11Y_CONFIG = 'test-paths-and-baseurl';
+        process.env.BBC_A11Y_CONFIG = 'test/paths-and-baseurl';
         const expectedOutput = `
           page( "http://base.url/path/1", { } )
           page( "http://base.url/path/2", { } )
@@ -147,7 +147,7 @@ describe('bbcA11y', () => {
     describe('Paths and signed in paths and baseUrl but no options', () => {
 
       it('outputs the basic config for the paths but not signed in paths when no username and/or password', () => {
-        process.env.BBC_A11Y_CONFIG = 'test-paths-with-signed-in-and-baseurl';
+        process.env.BBC_A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
         const expectedOutput = `
           page( "http://base.url/path/1", { } )
           page( "http://base.url/path/2", { } )
@@ -164,7 +164,7 @@ describe('bbcA11y', () => {
       });
 
       it('logs a warning when no username and/or password', () => {
-        process.env.BBC_A11Y_CONFIG = 'test-paths-with-signed-in-and-baseurl';
+        process.env.BBC_A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
 
         bbcA11y.build();
 
@@ -172,14 +172,14 @@ describe('bbcA11y', () => {
       });
 
       it('outputs the basic config for the paths and signed in paths when username and password provided', () => {
-        process.env.BBC_A11Y_CONFIG = 'test-paths-with-signed-in-and-baseurl';
+        process.env.BBC_A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
         process.env.A11Y_USERNAME = 'my-username';
         process.env.A11Y_PASSWORD = 'my-password';
         const expectedOutput = `
           page("http://base.url/path/1", {})
-          
+
           page("http://base.url/path/2", {})
-                   
+
           page("http://base.url/path/3",
             {
               visit: function (frame) {
@@ -188,7 +188,7 @@ describe('bbcA11y', () => {
               }
             }
           )
-          
+
           page("http://base.url/path/4",
             {
               visit: function (frame) {
@@ -215,18 +215,18 @@ describe('bbcA11y', () => {
   describe('Paths and signed in paths and baseUrl and options', () => {
 
     it('outputs the config for the paths and signed in paths when username and password provided with the options provided', () => {
-      process.env.BBC_A11Y_CONFIG = 'test-paths-with-signed-in-and-baseurl-and-options';
+      process.env.BBC_A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl-and-options';
       process.env.A11Y_USERNAME = 'my-username';
       process.env.A11Y_PASSWORD = 'my-password';
       const expectedOutput = `
         page("http://base.url/path/1", {
           some: "option"
         })
-        
+
         page("http://base.url/path/2", {
           some: "option"
         })
-                 
+
         page("http://base.url/path/3",
           {
             visit: function (frame) {
@@ -236,7 +236,7 @@ describe('bbcA11y', () => {
             some: "option"
           }
         )
-        
+
         page("http://base.url/path/4",
           {
             visit: function (frame) {
