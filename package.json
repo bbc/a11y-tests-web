@@ -8,9 +8,9 @@
     "clean": "node cleanBbcA11y.js",
     "start:bbc-a11y": "npm run build:bbc-a11y && bbc-a11y && npm run clean",
     "start:bbc-a11y:interactive": "npm run build:bbc-a11y && bbc-a11y --interactive && npm run clean",
-    "start:bbc-a11y:junit": "npm run build:bbc-a11y && bbc-a11y --reporter ./lib/jUnitReporter.js && npm run clean",
-    "start:bbc-a11y:junit-interactive": "npm run build:bbc-a11y && bbc-a11y --interactive --reporter ./lib/jUnitReporter.js && npm run clean",
-    "start:bbc-a11y:ci": "npm run build:bbc-a11y && bash -c \"docker run --rm --tty --volume $PWD:/ws wildlyinaccurate/bbc-a11y-docker --config /ws/a11y.js --reporter /ws/lib/jUnitReporter.js; exit 0;\" && npm run clean",
+    "start:bbc-a11y:junit": "npm run build:bbc-a11y && bbc-a11y --reporter ./lib/bbcA11YJUnitReporter.js && npm run clean",
+    "start:bbc-a11y:junit-interactive": "npm run build:bbc-a11y && bbc-a11y --interactive --reporter ./lib/bbcA11YJUnitReporter.js && npm run clean",
+    "start:bbc-a11y:ci": "npm run build:bbc-a11y && bash -c \"docker run --rm --tty --volume $PWD:/ws wildlyinaccurate/bbc-a11y-docker --config /ws/a11y.js --reporter /ws/lib/bbcA11YJUnitReporter.js; exit 0;\" && npm run clean",
     "lint": "npm run clean && eslint .",
     "test": "mocha 'test/**/*.js'"
   },
