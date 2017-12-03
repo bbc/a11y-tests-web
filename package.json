@@ -6,11 +6,13 @@
   "scripts": {
     "build:bbc-a11y": "node buildBbcA11y.js",
     "clean": "node cleanBbcA11y.js",
-    "start:bbc-a11y": "npm run build:bbc-a11y && bbc-a11y && npm run clean",
-    "start:bbc-a11y:interactive": "npm run build:bbc-a11y && bbc-a11y --interactive && npm run clean",
-    "start:bbc-a11y:junit": "npm run build:bbc-a11y && bbc-a11y --reporter ./lib/bbcA11YJUnitReporter.js && npm run clean",
-    "start:bbc-a11y:junit-interactive": "npm run build:bbc-a11y && bbc-a11y --interactive --reporter ./lib/bbcA11YJUnitReporter.js && npm run clean",
+    "start:bbc-a11y": "npm run build:bbc-a11y && bbc-a11y --interactive && npm run clean",
+    "start:bbc-a11y:headless": "npm run build:bbc-a11y && bbc-a11y && npm run clean",
+    "start:bbc-a11y:junit": "npm run build:bbc-a11y && bbc-a11y --interactive --reporter ./lib/bbcA11YJUnitReporter.js && npm run clean",
+    "start:bbc-a11y:junit-headless": "npm run build:bbc-a11y && bbc-a11y --reporter ./lib/bbcA11YJUnitReporter.js && npm run clean",
     "start:bbc-a11y:ci": "npm run build:bbc-a11y && bash -c \"docker run --rm --tty --volume $PWD:/ws wildlyinaccurate/bbc-a11y-docker --config /ws/a11y.js --reporter /ws/lib/bbcA11YJUnitReporter.js; exit 0;\" && npm run clean",
+    "start:lighthouse:junit": "node runLighthouse.js",
+    "start:lighthouse:junit-headless": "A11Y_HEADLESS=true node runLighthouse.js",
     "lint": "npm run clean && eslint .",
     "test": "mocha 'test/**/*.js'"
   },
@@ -18,8 +20,11 @@
   "author": "Andy Smith <andy.smith04@bbc.co.uk>",
   "license": "BBC",
   "dependencies": {
-    "junit-report-builder": "^1.1.1",
-    "bbc-a11y": "^1.3.4"
+    "bbc-a11y": "^1.3.4",
+    "chrome-launcher": "^0.8.1",
+    "chrome-remote-interface": "^0.25.4",
+    "junit-report-builder": "^1.2.0",
+    "lighthouse": "^2.5.0"
   },
   "devDependencies": {
     "eslint": "^4.11.0",
