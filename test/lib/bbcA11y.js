@@ -210,15 +210,13 @@ describe('bbcA11y', () => {
       });
     });
 
-  });
+    describe('Paths and signed in paths and baseUrl and options', () => {
 
-  describe('Paths and signed in paths and baseUrl and options', () => {
-
-    it('outputs the config for the paths and signed in paths when username and password provided with the options provided', () => {
-      process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl-and-options';
-      process.env.A11Y_USERNAME = 'my-username';
-      process.env.A11Y_PASSWORD = 'my-password';
-      const expectedOutput = `
+      it('outputs the config for the paths and signed in paths when username and password provided with the options provided', () => {
+        process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl-and-options';
+        process.env.A11Y_USERNAME = 'my-username';
+        process.env.A11Y_PASSWORD = 'my-password';
+        const expectedOutput = `
         page("http://base.url/path/1", {
           some: "option"
         })
@@ -247,15 +245,16 @@ describe('bbcA11y', () => {
           }
         )
       `;
-      const matcher = getMinifiedMatcher(expectedOutput);
+        const matcher = getMinifiedMatcher(expectedOutput);
 
-      bbcA11y.build();
+        bbcA11y.build();
 
-      sandbox.assert.calledWith(
-        fs.writeFileSync,
-        'a11y.js',
-        sandbox.match(matcher)
-      );
+        sandbox.assert.calledWith(
+          fs.writeFileSync,
+          'a11y.js',
+          sandbox.match(matcher)
+        );
+      });
     });
   });
 
