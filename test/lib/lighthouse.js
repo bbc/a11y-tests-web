@@ -57,6 +57,7 @@ describe.only('lighthouse', () => {
       })
     };
     sandbox.stub(reportBuilder, 'testSuite').returns(fakeReportBuilderTestSuite);
+    sandbox.stub(reportBuilder, 'build').returns('Built report');
   });
 
   afterEach(() => {
@@ -225,6 +226,26 @@ describe.only('lighthouse', () => {
             'Failing elements:\n' +
             '#orb-modules form > input[type="text"][name="q"] - <input class="search-bar" name="q" placeholder="Search">'
           );
+        });
+      });
+
+      it('logs the error and exists if something goes wrong reading the results', () => {
+        process.env.A11Y_CONFIG = 'test/just-paths';
+        external.lighthouse.resolves('this is not an object');
+
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(colourfulLog.error, sandbox.match.any);
+          sandbox.assert.calledWith(process.exit, 1);
+        });
+      });
+
+      it('outputs the report to the file and the logging output', () => {
+        process.env.A11Y_CONFIG = 'test/just-paths';
+
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledOnce(reportBuilder.build);
+          sandbox.assert.calledWith(fs.writeFileSync, sandbox.match(/lighthouse-report\.xml$/), 'Built report');
+          sandbox.assert.calledWith(colourfulLog.log, 'Built report');
         });
       });
 
