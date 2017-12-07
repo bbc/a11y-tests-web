@@ -3,17 +3,20 @@
 const chromeLauncher = require('chrome-launcher');
 const external = require('../../lib/external');
 const fs = require('fs');
+const reportBuilder = require('junit-report-builder');
 const sandbox = require('sinon').sandbox.create();
 const { CDP, lighthouse } = external;
 
 const colourfulLog = require('../../lib/colourfulLog');
 const lighthouseRunner = require('../../lib/lighthouse');
+const fakeResults = require('../fixtures/lighthouseReport');
 
 describe.only('lighthouse', () => {
 
   let originalEnv;
   let originalExit;
   let chromeKill;
+  let fakeReportBuilderTestSuite;
 
   beforeEach(() => {
     originalEnv = Object.assign({}, process.env);
@@ -41,13 +44,24 @@ describe.only('lighthouse', () => {
         evaluate: sandbox.stub()
       }
     });
-    sandbox.stub(external, 'lighthouse').resolves('fake results');
+    sandbox.stub(external, 'lighthouse').resolves(fakeResults);
+
+    fakeReportBuilderTestSuite = {
+      name: sandbox.stub(),
+      time: sandbox.stub(),
+      testCase: sandbox.stub().returns({
+        className: sandbox.stub(),
+        name: sandbox.stub(),
+        failure: sandbox.stub(),
+        time: sandbox.stub()
+      })
+    };
+    sandbox.stub(reportBuilder, 'testSuite').returns(fakeReportBuilderTestSuite);
   });
 
   afterEach(() => {
     process.env = originalEnv;
     process.exit = originalExit;
-    console.log('resetoring');
     sandbox.restore();
   });
 
@@ -155,7 +169,64 @@ describe.only('lighthouse', () => {
         });
       });
 
+      it('creates a test suite for each URL using default base URL', () => {
+        process.env.A11Y_CONFIG = 'test/just-paths';
 
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledTwice(reportBuilder.testSuite);
+          sandbox.assert.calledWith(reportBuilder.testSuite().name, 'www.bbc.co.uk./path/1');
+          sandbox.assert.calledWith(reportBuilder.testSuite().name, 'www.bbc.co.uk./path/2');
+        });
+      });
+
+      it('sets the duration for the test suite', () => {
+        process.env.A11Y_CONFIG = 'test/just-paths';
+
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledTwice(reportBuilder.testSuite);
+          sandbox.assert.calledWith(reportBuilder.testSuite().time, 123456);
+        });
+      });
+
+      it('creates a test case for each result, with classname, name and time', () => {
+        process.env.A11Y_CONFIG = 'test/just-paths';
+
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().className, 'www.bbc.co.uk./path/1');
+          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().name, '`[role]` values are valid.');
+          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().time, 41152);
+        });
+      });
+
+      it('sets the correct error message for failed tests that have error details', () => {
+        process.env.A11Y_CONFIG = 'test/just-paths';
+
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(
+            reportBuilder.testSuite().testCase().failure,
+            'Error on http://www.bbc.co.uk/path/1\n' +
+            'Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse).\n' +
+            '\n' +
+            'Failing elements:\n' +
+            'span > strong - <strong>'
+          );
+        });
+      });
+
+      it('sets the correct error message for failed tests that have extended info', () => {
+        process.env.A11Y_CONFIG = 'test/just-paths';
+
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(
+            reportBuilder.testSuite().testCase().failure,
+            'Error on http://www.bbc.co.uk/path/2\n' +
+            'Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse).\n' +
+            '\n' +
+            'Failing elements:\n' +
+            '#orb-modules form > input[type="text"][name="q"] - <input class="search-bar" name="q" placeholder="Search">'
+          );
+        });
+      });
 
     });
 
