@@ -58,7 +58,7 @@ A11Y_CONFIG=iplayer-web/all npm run start:bbc-a11y:ci
 
 Note that Docker obviously needs to be running and you can ignore any messages about XLib and libudev.
 
-## Run Google Lighthouse and generate a JUnit report using a config, e.g. iplayer-web/all
+### Run Google Lighthouse and generate a JUnit report using a config, e.g. iplayer-web/all
 
 To run Google Lighthouse and generate a JUnit report:
 
