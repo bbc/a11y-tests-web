@@ -3,3 +3,4 @@ node_modules/
 a11y.js
 bbc-a11y-report.xml
 lighthouse-report.xml
+package-lock.json
