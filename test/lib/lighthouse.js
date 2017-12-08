@@ -100,9 +100,6 @@ describe('lighthouse', () => {
     sandbox.restore();
   });
 
-  after(() => {
-  });
-
   describe('run()', () => {
 
     describe('No A11Y_CONFIG', () => {
