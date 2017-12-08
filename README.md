@@ -6,7 +6,7 @@ Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) and [Google Lighthouse](https:/
 - Node v6 or above
 - Docker (if using the `ci` option)
 
-## Installation
+## Installation of dependencies
 
 ```
 npm install
@@ -19,10 +19,10 @@ npm install
 To run bbc-a11y in interactive mode:
 
 ```
-A11Y_CONFIG=iplayer-web/all npm start:bbc-a11y
+A11Y_CONFIG=iplayer-web/all npm run start:bbc-a11y
 ```
 
-This will generate the commands for bbc-a11y and then run the tests against the pages listed in the iplayer-web/all config file in config/bbc-a11y
+This will generate the commands for bbc-a11y and then run the tests against the pages listed in the iplayer-web/all config file in the config directory.
 
 ### Run bbc-a11y in headless mode
 
@@ -50,26 +50,48 @@ A11Y_CONFIG=iplayer-web/all npm run start:bbc-a11y:junit-headless
 
 ### Run bbc-a11y and generate a JUnit report using Docker
 
-If you don't have all the necessary libraries on your system required to run Electron, for example if you want to run this on a CI server, you can run the bbc-a11y tests inside a Docker container (thanks to Joseph Wynn for [the container](https://hub.docker.com/r/wildlyinaccurate/bbc-a11y-docker/)):
+If you don't have all the necessary libraries on your system required to run Electron, for example if you want to run this on a CI server, or if you want the process to always exit successfully, you can run this command to run them inside a Docker container and exit with success (thanks to Joseph Wynn for [the container](https://hub.docker.com/r/wildlyinaccurate/bbc-a11y-docker/)):
 
 ```
 A11Y_CONFIG=iplayer-web/all npm run start:bbc-a11y:ci
 ```
 
+Note that Docker obviously needs to be running and you can ignore any messages about XLib and libudev.
+
+## Run Google Lighthouse and generate a JUnit report using a config, e.g. iplayer-web/all
+
+To run Google Lighthouse and generate a JUnit report:
+
+```
+A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit
+
+```
+
+This will run the Google Lighthouse accessibility audit against the URLs defined in the iplayer-web/all config file, and generate a JUnit report called lighthouse-report.xml.
+
+If you'd like a more human readable report, you can simply use Google Chrome to run the audit, by opening dev tools and going to Audits.
+
+### Run Google Lighthouse in headless mode and generate a JUnit report
+
+To run Google Lighthouse in headless mode and generate a JUnit report:
+
+```
+A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit-headless
+```
+
 ## Running on Jenkins
 
-If you'd like to run this on your Jenkins server, ensure your Jenkins meets the requirements above and has the [JUnit plugin](https://plugins.jenkins.io/junit) installed and then:
+If you'd like to run this on your Jenkins server, ensure your Jenkins meets the requirements above and has a [JUnit plugin](https://plugins.jenkins.io/junit) installed and then:
 - Create a Jenkins job
 - Add this repo to the Jenkins job
 - Get the job to run `npm i --production`
-- Get the job to run the `start:bbc-a11y:ci` command as outlined above with your `A11Y_CONFIG`
-- Add a post-build action to "Publish JUnit test results report". The XML file is called "bbc-a11y-report.xml".
+- Get the job to run the `start:bbc-a11y:ci` command for bbc-a11y or `start:lighthouse:junit-headless` for Lighthouse, with your `A11Y_CONFIG`
+- Add a post-build action to "Publish JUnit test results report" (or such like). The bbc-a11y XML file is called "bbc-a11y-report.xml" and the Lighthouse XML file is called "lighthouse-report.xml".
 
 ## Creating a config
 
-### bbc-a11y
-
-Create a new file in config/bbc-a11y. It should either be a JSON file or a JS file that exports an object.
+If your product/team does not already have a folder, create one in `config`.
+You then need to create a new file in this folder which should either be a JSON file or a JS file that exports an object.
 
 The data should include:
 - `options` - Object - Options as defined by bbc-a11y, e.g. hide and skip. Note that these are currently **ignored** by Google Lighthouse.
