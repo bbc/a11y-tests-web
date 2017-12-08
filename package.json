@@ -14,7 +14,6 @@
     "lint": "npm run clean && eslint .",
     "test": "mocha 'test/**/*.js'"
   },
-  "private": true,
   "author": "Andy Smith <andy.smith04@bbc.co.uk>",
   "license": "BBC",
   "dependencies": {
