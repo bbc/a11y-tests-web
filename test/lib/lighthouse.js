@@ -3,20 +3,53 @@
 const chromeLauncher = require('chrome-launcher');
 const external = require('../../lib/external');
 const fs = require('fs');
+const minify = require('harp-minify');
 const reportBuilder = require('junit-report-builder');
 const sandbox = require('sinon').sandbox.create();
-const { CDP, lighthouse } = external;
 
 const colourfulLog = require('../../lib/colourfulLog');
 const lighthouseRunner = require('../../lib/lighthouse');
 const fakeResults = require('../fixtures/lighthouseReport');
 
-describe.only('lighthouse', () => {
+function getMinifiedMatcher(code) {
+  return (value) => {
+    const minifiedCode = minify.js(code);
+    const minifiedValue = minify.js(value);
+    return minifiedCode === minifiedValue;
+  };
+}
+
+const EXPECTED_LIGHTHOUSE_FLAGS = {
+  logLevel: 'silent',
+  output: 'json',
+  port: 1234
+};
+
+const EXPECTED_LIGHTHOUSE_CONFIG = {
+  extends: 'lighthouse:default',
+  settings: {
+    onlyCategories: ['accessibility']
+  },
+  categories: {
+    accessibility: {
+      weight: 1
+    }
+  }
+};
+
+const EXPECTED_LOGIN_SCRIPT = `
+  document.getElementById('user-identifier-input').value = 'my-username';
+  document.getElementById('password-input').value = 'my-password';
+  document.getElementById('submit-button').click();
+`;
+
+describe('lighthouse', () => {
 
   let originalEnv;
   let originalExit;
   let chromeKill;
   let fakeReportBuilderTestSuite;
+  let fakeCDP;
 
   beforeEach(() => {
     originalEnv = Object.assign({}, process.env);
@@ -34,7 +67,7 @@ describe.only('lighthouse', () => {
       kill: chromeKill
     });
 
-    sandbox.stub(external, 'CDP').resolves({
+    fakeCDP = {
       Page: {
         enable: sandbox.stub().resolves(),
         navigate: sandbox.stub().resolves(),
@@ -43,7 +76,8 @@ describe.only('lighthouse', () => {
       Runtime: {
         evaluate: sandbox.stub()
       }
-    });
+    };
+    sandbox.stub(external, 'CDP').resolves(fakeCDP);
     sandbox.stub(external, 'lighthouse').resolves(fakeResults);
 
     fakeReportBuilderTestSuite = {
@@ -69,65 +103,68 @@ describe.only('lighthouse', () => {
   after(() => {
   });
 
-  describe('build()', () => {
+  describe('run()', () => {
 
     describe('No A11Y_CONFIG', () => {
 
       it('logs the error message about no config', () => {
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(colourfulLog.error, 'No config selected. Use the A11Y_CONFIG environment variable to set one.');
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(colourfulLog.error, 'No config selected. Use the A11Y_CONFIG environment variable to set one.');
+        });
       });
 
       it('exits with status code 1', () => {
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(process.exit, 1);
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(process.exit, 1);
+        });
       });
 
     });
 
     describe('No config with the given name', () => {
+      beforeEach(() => {
+        process.env.A11Y_CONFIG = 'this-is-not-a-valid-config';
+      });
 
       it('logs the error message about no config', () => {
-        process.env.A11Y_CONFIG = 'this-is-not-a-valid-config';
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(colourfulLog.error, 'Could not find a valid config named this-is-not-a-valid-config');
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(colourfulLog.error, 'Could not find a valid config named this-is-not-a-valid-config');
+        });
       });
 
       it('exits with status code 1', () => {
-        process.env.A11Y_CONFIG = 'this-is-not-a-valid-config';
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(process.exit, 1);
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(process.exit, 1);
+        });
       });
 
     });
 
     describe('No paths in the config', () => {
+      beforeEach(() => {
+        process.env.A11Y_CONFIG = 'test/no-paths';
+      });
 
       it('logs the error message about no paths', () => {
-        process.env.A11Y_CONFIG = 'test/no-paths';
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(colourfulLog.error, 'No paths listed in the config for test/no-paths');
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(colourfulLog.error, 'No paths listed in the config for test/no-paths');
+        });
       });
 
       it('exits with status code 1', () => {
-        process.env.A11Y_CONFIG = 'test/no-paths';
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(process.exit, 1);
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(process.exit, 1);
+        });
       });
 
     });
 
-    describe('Paths but no baseUrl or options', () => {
+    describe('Paths but no baseUrl', () => {
+      beforeEach(() => {
+        process.env.A11Y_CONFIG = 'test/just-paths';
+      });
 
       it('launches chrome once per path with the right options', () => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
-
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(chromeLauncher.launch, { chromeFlags: ['--disable-gpu', '--no-sandbox'] });
           sandbox.assert.calledTwice(chromeLauncher.launch);
@@ -135,44 +172,24 @@ describe.only('lighthouse', () => {
       });
 
       it('launches lighthouse with the base url and path, flags and config', () => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
-
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledTwice(external.lighthouse);
           sandbox.assert.calledWith(
             external.lighthouse,
             'http://www.bbc.co.uk/path/1',
-            {
-              logLevel: 'silent',
-              output: 'json',
-              port: 1234
-            },
-            {
-              extends: 'lighthouse:default',
-              settings: {
-                onlyCategories: ['accessibility']
-              },
-              categories: {
-                accessibility: {
-                  weight: 1
-                }
-              }
-            }
+            EXPECTED_LIGHTHOUSE_FLAGS,
+            EXPECTED_LIGHTHOUSE_CONFIG
           );
         });
       });
 
       it('kills Chrome at the end', () => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
-
         return lighthouseRunner.run().then(() => {
           sandbox.assert.called(chromeKill);
         });
       });
 
       it('creates a test suite for each URL using default base URL', () => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
-
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledTwice(reportBuilder.testSuite);
           sandbox.assert.calledWith(reportBuilder.testSuite().name, 'www.bbc.co.uk./path/1');
@@ -181,8 +198,6 @@ describe.only('lighthouse', () => {
       });
 
       it('sets the duration for the test suite', () => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
-
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledTwice(reportBuilder.testSuite);
           sandbox.assert.calledWith(reportBuilder.testSuite().time, 123456);
@@ -190,8 +205,6 @@ describe.only('lighthouse', () => {
       });
 
       it('creates a test case for each result, with classname, name and time', () => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
-
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(reportBuilder.testSuite().testCase().className, 'www.bbc.co.uk./path/1');
           sandbox.assert.calledWith(reportBuilder.testSuite().testCase().name, '`[role]` values are valid.');
@@ -200,8 +213,6 @@ describe.only('lighthouse', () => {
       });
 
       it('sets the correct error message for failed tests that have error details', () => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
-
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(
             reportBuilder.testSuite().testCase().failure,
@@ -215,8 +226,6 @@ describe.only('lighthouse', () => {
       });
 
       it('sets the correct error message for failed tests that have extended info', () => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
-
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(
             reportBuilder.testSuite().testCase().failure,
@@ -230,7 +239,6 @@ describe.only('lighthouse', () => {
       });
 
       it('logs the error and exists if something goes wrong reading the results', () => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
         external.lighthouse.resolves('this is not an object');
 
         return lighthouseRunner.run().then(() => {
@@ -240,8 +248,6 @@ describe.only('lighthouse', () => {
       });
 
       it('outputs the report to the file and the logging output', () => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
-
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledOnce(reportBuilder.build);
           sandbox.assert.calledWith(fs.writeFileSync, sandbox.match(/lighthouse-report\.xml$/), 'Built report');
@@ -251,139 +257,99 @@ describe.only('lighthouse', () => {
 
     });
 
-    describe.skip('Paths and baseUrl but no options', () => {
-
-      it('outputs the basic config for the paths, with the defined baseUrl', () => {
+    describe('Paths and baseUrl', () => {
+      beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-and-baseurl';
-        const expectedOutput = `
-          page( "http://base.url/path/1", { } )
-          page( "http://base.url/path/2", { } )
-        `;
-        const matcher = getMinifiedMatcher(expectedOutput);
-
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(
-          fs.writeFileSync,
-          'a11y.js',
-          sandbox.match(matcher)
-        );
       });
 
+      it('launches lighthouse with the base url and path, flags and config', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledTwice(external.lighthouse);
+          sandbox.assert.calledWith(
+            external.lighthouse,
+            'http://base.url/path/1',
+            EXPECTED_LIGHTHOUSE_FLAGS,
+            EXPECTED_LIGHTHOUSE_CONFIG
+          );
+        });
+      });
+
+      it('creates a test suite for each URL using the base URL', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledTwice(reportBuilder.testSuite);
+          sandbox.assert.calledWith(reportBuilder.testSuite().name, 'base.url./path/1');
+          sandbox.assert.calledWith(reportBuilder.testSuite().name, 'base.url./path/2');
+        });
+      });
+
+      it('creates a test case for each result, with correct classname', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().className, 'base.url./path/1');
+        });
+      });
     });
 
-    describe.skip('Paths and signed in paths and baseUrl but no options', () => {
-
-      it('outputs the basic config for the paths but not signed in paths when no username and/or password', () => {
+    describe('Paths and signed in paths and baseUrl but no username and password', () => {
+      beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
-        const expectedOutput = `
-          page( "http://base.url/path/1", { } )
-          page( "http://base.url/path/2", { } )
-        `;
-        const matcher = getMinifiedMatcher(expectedOutput);
-
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(
-          fs.writeFileSync,
-          'a11y.js',
-          sandbox.match(matcher)
-        );
       });
 
-      it('logs a warning when no username and/or password', () => {
-        process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
-
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(colourfulLog.warning, 'Skipping signed in paths because a username and/or password were not specified. (Use A11Y_USERNAME and A11Y_PASSWORD environment variables to set them)');
+      it('launches lighthouse for the signed out paths only', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledTwice(external.lighthouse);
+          sandbox.assert.calledWith(external.lighthouse, 'http://base.url/path/1');
+          sandbox.assert.calledWith(external.lighthouse, 'http://base.url/path/2');
+        });
       });
 
-      it('outputs the basic config for the paths and signed in paths when username and password provided', () => {
+      it('logs a warning about skipping signed in paths', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(colourfulLog.warning, 'Skipping signed in paths because a username and/or password were not specified. (Use A11Y_USERNAME and A11Y_PASSWORD environment variables to set them)');
+        });
+      });
+    });
+
+    describe('Paths and signed in paths and baseUrl with a username and password', () => {
+      beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
         process.env.A11Y_USERNAME = 'my-username';
         process.env.A11Y_PASSWORD = 'my-password';
-        const expectedOutput = `
-          page("http://base.url/path/1", {})
-
-          page("http://base.url/path/2", {})
-
-          page("http://base.url/path/3",
-            {
-              visit: function (frame) {
-                frame.src = 'https://account.bbc.com/signin?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F3';
-                ${VISIT_OPTION_BODY}
-              }
-            }
-          )
-
-          page("http://base.url/path/4",
-            {
-              visit: function (frame) {
-                frame.src = 'https://account.bbc.com/signin?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F4';
-                ${VISIT_OPTION_BODY}
-              }
-            }
-          )
-        `;
-        const matcher = getMinifiedMatcher(expectedOutput);
-
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(
-          fs.writeFileSync,
-          'a11y.js',
-          sandbox.match(matcher)
-        );
       });
+
+      it('launches lighthouse for the signed out and signed in paths when username and password provided', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.callCount(external.lighthouse, 4);
+          sandbox.assert.calledWith(external.lighthouse, 'http://base.url/path/1');
+          sandbox.assert.calledWith(external.lighthouse, 'http://base.url/path/2');
+          sandbox.assert.calledWith(external.lighthouse, 'http://base.url/path/3');
+          sandbox.assert.calledWith(external.lighthouse, 'http://base.url/path/4');
+        });
+      });
+
+      it('sets up the chrome remote interface with the port that Chrome is running on', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(external.CDP, sandbox.match({ port: 1234 }));
+        });
+      });
+
+      it('calls Page.enable and then navigates to the sign-in page', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.called(fakeCDP.Page.enable);
+          sandbox.assert.calledWith(fakeCDP.Page.navigate, sandbox.match({ url: 'https://account.bbc.com/signin?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F3' }));
+        });
+      });
+
+      it('completes the sign-in process', () => {
+        return lighthouseRunner.run().then(() => {
+          const matcher = getMinifiedMatcher(EXPECTED_LOGIN_SCRIPT);
+          sandbox.assert.calledWith(fakeCDP.Runtime.evaluate, sandbox.match({
+            expression: sandbox.match(matcher)
+          }));
+        });
+      });
+
     });
 
-    describe.skip('Paths and signed in paths and baseUrl and options', () => {
-
-      it('outputs the config for the paths and signed in paths when username and password provided with the options provided', () => {
-        process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl-and-options';
-        process.env.A11Y_USERNAME = 'my-username';
-        process.env.A11Y_PASSWORD = 'my-password';
-        const expectedOutput = `
-        page("http://base.url/path/1", {
-          some: "option"
-        })
-
-        page("http://base.url/path/2", {
-          some: "option"
-        })
-
-        page("http://base.url/path/3",
-          {
-            visit: function (frame) {
-              frame.src = 'https://account.bbc.com/signin?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F3';
-              ${VISIT_OPTION_BODY}
-            },
-            some: "option"
-          }
-        )
-
-        page("http://base.url/path/4",
-          {
-            visit: function (frame) {
-              frame.src = 'https://account.bbc.com/signin?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F4';
-              ${VISIT_OPTION_BODY}
-            },
-            some: "option"
-          }
-        )
-      `;
-        const matcher = getMinifiedMatcher(expectedOutput);
-
-        lighthouseRunner.run();
-
-        sandbox.assert.calledWith(
-          fs.writeFileSync,
-          'a11y.js',
-          sandbox.match(matcher)
-        );
-      });
-    });
   });
 
 });
