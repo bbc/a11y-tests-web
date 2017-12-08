@@ -1,12 +1,12 @@
 'use strict';
 
-const features = require('./iplayer-web-app-features-test');
-const highlights = require('./iplayer-web-app-highlights-test');
-const homepage = require('./iplayer-web-app-homepage-test');
-const lists = require('./iplayer-web-app-lists-test');
-const myprogrammes = require('./iplayer-web-app-myprogrammes-test');
-const playback = require('./iplayer-web-app-playback-test');
-const { options } = require('./iplayer-web-common');
+const features = require('./app-features-test');
+const highlights = require('./app-highlights-test');
+const homepage = require('./app-homepage-test');
+const lists = require('./app-lists-test');
+const myprogrammes = require('./app-myprogrammes-test');
+const playback = require('./app-playback-test');
+const { options } = require('./common');
 
 module.exports = {
   options,

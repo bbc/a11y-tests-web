@@ -5,7 +5,7 @@ const fs = require('fs');
 const builder = require('junit-report-builder');
 const sandbox = require('sinon').sandbox.create();
 
-const JUnitReporter = require('../../lib/jUnitReporter');
+const JUnitReporter = require('../../lib/bbcA11YJUnitReporter');
 
 const commandLineConsole = {
   log: () => {}
