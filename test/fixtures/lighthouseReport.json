@@ -1,0 +1,127 @@
+{
+  "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/62.0.3202.94 Safari/537.36",
+  "lighthouseVersion": "2.6.0",
+  "generatedTime": "2017-12-06T13:39:59.291Z",
+  "initialUrl": "https://frontdoor.iplayer.test.api.bbc.co.uk/iplayer/episode/p04qh1gk/face-to-face-dame-edith-sitwell",
+  "url": "https://frontdoor.iplayer.test.api.bbc.co.uk/iplayer/episode/p04qh1gk/face-to-face-dame-edith-sitwell",
+  "audits": {
+    "aria-roles": {
+      "score": true,
+      "displayValue": "",
+      "rawValue": true,
+      "extendedInfo": {},
+      "scoringMode": "binary",
+      "name": "aria-roles",
+      "description": "`[role]` values are valid.",
+      "helpText": "ARIA roles must have valid values in order to perform their intended accessibility functions. [Learn more](https://dequeuniversity.com/rules/axe/2.2/aria-roles?application=lighthouse).",
+      "details": {
+        "type": "list",
+        "header": {
+          "type": "text",
+          "text": "View failing elements"
+        },
+        "items": []
+      }
+    },
+    "color-contrast": {
+      "score": false,
+      "displayValue": "",
+      "rawValue": false,
+      "extendedInfo": {
+        "value": {
+          "id": "color-contrast",
+          "impact": "serious",
+          "tags": [
+            "cat.color",
+            "wcag2aa",
+            "wcag143"
+          ],
+          "description": "Ensures the contrast between foreground and background colors meets WCAG 2 AA contrast ratio thresholds",
+          "help": "Elements must have sufficient color contrast",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/2.4/color-contrast?application=axeAPI",
+          "nodes": [
+            {
+              "any": null,
+              "all": null,
+              "none": null,
+              "impact": "serious",
+              "html": "<strong>Archive</strong>",
+              "element": null,
+              "target": [
+                "span > strong"
+              ],
+              "failureSummary": "Fix any of the following:\n  Element has insufficient color contrast of 3.34 (foreground color: #ffffff, background color: #f54997, font size: 8.3pt, font weight: bold)",
+              "path": "1,HTML,1,BODY,14,DIV,1,DIV,0,DIV,2,DIV,3,DIV,0,DIV,3,DIV,0,DIV,0,DIV,1,DIV,0,DIV,0,DIV,0,DIV,0,SPAN,0,STRONG",
+              "snippet": "<strong>"
+            }
+          ]
+        }
+      },
+      "scoringMode": "binary",
+      "name": "color-contrast",
+      "description": "Background and foreground colors do not have a sufficient contrast ratio.",
+      "helpText": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse).",
+      "details": {
+        "type": "list",
+        "header": {
+          "type": "text",
+          "text": "View failing elements"
+        },
+        "items": [
+          {
+            "type": "node",
+            "selector": "span > strong",
+            "path": "1,HTML,1,BODY,14,DIV,1,DIV,0,DIV,2,DIV,3,DIV,0,DIV,3,DIV,0,DIV,0,DIV,1,DIV,0,DIV,0,DIV,0,DIV,0,SPAN,0,STRONG",
+            "snippet": "<strong>"
+          }
+        ]
+      }
+    },
+    "label": {
+      "score": false,
+      "displayValue": "",
+      "rawValue": false,
+      "extendedInfo": {
+        "value": {
+          "id": "label",
+          "impact": "critical",
+          "tags": [
+            "cat.forms",
+            "wcag2a",
+            "wcag332",
+            "wcag131",
+            "section508",
+            "section508.22.n"
+          ],
+          "description": "Ensures every form element has a label",
+          "help": "Form elements must have labels",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/2.4/label?application=axeAPI",
+          "nodes": [
+            {
+              "any": null,
+              "all": null,
+              "none": null,
+              "impact": "critical",
+              "html": "<input class=\"radionav__search-bar\" name=\"q\" maxlength=\"128\" type=\"text\" autocomplete=\"off\" placeholder=\"Search\">",
+              "element": null,
+              "target": [
+                "#orb-modules form > input[type=\"text\"][name=\"q\"]"
+              ],
+              "failureSummary": "Fix any of the following:\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty or not visible\n  Form element does not have an implicit (wrapped) <label>\n  Form element does not have an explicit <label>\n  Element has no title attribute or the title attribute is empty",
+              "path": "1,HTML,1,BODY,18,DIV,0,DIV,0,DIV,0,SECTION,0,DIV,1,SECTION,2,FORM,0,INPUT",
+              "snippet": "<input class=\"search-bar\" name=\"q\" placeholder=\"Search\">"
+            }
+          ]
+        }
+      },
+      "scoringMode": "binary",
+      "name": "label",
+      "description": "Form elements do not have associated labels.",
+      "helpText": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse).",
+      "details": {}
+    }
+  },
+  "timing": {
+    "total": 123456
+  }
+}
