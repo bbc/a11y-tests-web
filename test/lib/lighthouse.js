@@ -235,6 +235,15 @@ describe('lighthouse', () => {
         });
       });
 
+      it('ignores manual tests and does not output these', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.neverCalledWith(
+            reportBuilder.testSuite().testCase().failure,
+            sandbox.match(/DOM order matches the visual order/)
+          );
+        });
+      });
+
       it('logs the error and exists if something goes wrong reading the results', () => {
         external.lighthouse.resolves('this is not an object');
 
