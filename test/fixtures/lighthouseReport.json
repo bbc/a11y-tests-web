@@ -119,6 +119,17 @@
       "description": "Form elements do not have associated labels.",
       "helpText": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse).",
       "details": {}
+    },
+    "visual-order-follows-dom": {
+      "score": false,
+      "displayValue": "",
+      "rawValue": false,
+      "scoringMode": "binary",
+      "informative": true,
+      "manual": true,
+      "name": "visual-order-follows-dom",
+      "description": "Visual order on the page follows DOM order",
+      "helpText": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader)."
     }
   },
   "timing": {
