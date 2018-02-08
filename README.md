@@ -102,9 +102,4 @@ The data should include:
 Note that if you have a list of `signedInPaths`, the username and password to use when logging in to BBC ID should be specified using the environment variables A11Y_USERNAME and A11Y_PASSWORD.
 
 ## Contributing
-If you'd like to add your own config for your team, or contribute to this repo in some other way...
-- Create a fork
-- Create a branch
-- Make your changes
-- Ensure the linting job (`npm run lint`) runs successfully (and fix any issues if not)
-- Submit a PR
+See [CONTRIBUTING.md](https://github.com/bbc/a11y-tests-web/blob/master/CONTRIBUTING.md)
