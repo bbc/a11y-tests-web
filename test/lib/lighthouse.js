@@ -161,9 +161,18 @@ describe('lighthouse', () => {
         process.env.A11Y_CONFIG = 'test/just-paths';
       });
 
-      it('launches chrome once per path with the right options', () => {
+      it('launches chrome once per path with the right options if A11Y_HEADLESS not set', () => {
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(chromeLauncher.launch, { chromeFlags: ['--disable-gpu', '--no-sandbox'] });
+          sandbox.assert.calledTwice(chromeLauncher.launch);
+        });
+      });
+
+      it('launches chrome once per path with the right options if A11Y_HEADLESS is set', () => {
+        process.env.A11Y_HEADLESS = 'true';
+
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(chromeLauncher.launch, { chromeFlags: ['--headless', '--disable-gpu', '--no-sandbox'] });
           sandbox.assert.calledTwice(chromeLauncher.launch);
         });
       });
@@ -181,6 +190,14 @@ describe('lighthouse', () => {
       });
 
       it('kills Chrome at the end', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.called(chromeKill);
+        });
+      });
+
+      it('kills Chrome if lighthouse errors', () => {
+        external.lighthouse.throws();
+
         return lighthouseRunner.run().then(() => {
           sandbox.assert.called(chromeKill);
         });

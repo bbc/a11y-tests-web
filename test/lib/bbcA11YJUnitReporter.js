@@ -66,6 +66,7 @@ describe('JUnit Reporter', () => {
     it('is a function', () => {
       const junitReporter = getJunitReporter();
       assert.equal(typeof junitReporter.runStarted, 'function');
+      junitReporter.runStarted();
     });
 
   });
@@ -119,6 +120,7 @@ describe('JUnit Reporter', () => {
     it('is a function', () => {
       const junitReporter = getJunitReporter();
       assert.equal(typeof junitReporter.pagePassed, 'function');
+      junitReporter.pagePassed();
     });
 
   });
@@ -128,6 +130,7 @@ describe('JUnit Reporter', () => {
     it('is a function', () => {
       const junitReporter = getJunitReporter();
       assert.equal(typeof junitReporter.pageFailed, 'function');
+      junitReporter.pageFailed();
     });
 
   });
