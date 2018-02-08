@@ -9,7 +9,6 @@
       "score": true,
       "displayValue": "",
       "rawValue": true,
-      "extendedInfo": {},
       "scoringMode": "binary",
       "name": "aria-roles",
       "description": "`[role]` values are valid.",
@@ -60,22 +59,7 @@
       "scoringMode": "binary",
       "name": "color-contrast",
       "description": "Background and foreground colors do not have a sufficient contrast ratio.",
-      "helpText": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse).",
-      "details": {
-        "type": "list",
-        "header": {
-          "type": "text",
-          "text": "View failing elements"
-        },
-        "items": [
-          {
-            "type": "node",
-            "selector": "span > strong",
-            "path": "1,HTML,1,BODY,14,DIV,1,DIV,0,DIV,2,DIV,3,DIV,0,DIV,3,DIV,0,DIV,0,DIV,1,DIV,0,DIV,0,DIV,0,DIV,0,SPAN,0,STRONG",
-            "snippet": "<strong>"
-          }
-        ]
-      }
+      "helpText": "Low-contrast text is difficult or impossible for many users to read. [Learn more](https://dequeuniversity.com/rules/axe/2.2/color-contrast?application=lighthouse)."
     },
     "label": {
       "score": false,
@@ -119,6 +103,15 @@
       "description": "Form elements do not have associated labels.",
       "helpText": "Labels ensure that form controls are announced properly by assistive technologies, like screen readers. [Learn more](https://dequeuniversity.com/rules/axe/2.2/label?application=lighthouse).",
       "details": {}
+    },
+    "audit-with-no-details-or-info": {
+      "score": false,
+      "displayValue": "",
+      "rawValue": true,
+      "scoringMode": "binary",
+      "name": "aria-roles",
+      "description": "`[role]` values are valid.",
+      "helpText": "This is some help text from the audit"
     },
     "visual-order-follows-dom": {
       "score": false,

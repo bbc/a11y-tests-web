@@ -222,7 +222,7 @@ describe('lighthouse', () => {
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(reportBuilder.testSuite().testCase().className, 'www.bbc.co.uk./path/1');
           sandbox.assert.calledWith(reportBuilder.testSuite().testCase().name, '`[role]` values are valid.');
-          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().time, 41152);
+          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().time, 30864);
         });
       });
 
@@ -248,6 +248,16 @@ describe('lighthouse', () => {
             '\n' +
             'Failing elements:\n' +
             '#orb-modules form > input[type="text"][name="q"] - <input class="search-bar" name="q" placeholder="Search">'
+          );
+        });
+      });
+
+      it('sets the correct error message for failed tests that have no extended info or details', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(
+            reportBuilder.testSuite().testCase().failure,
+            'Error on http://www.bbc.co.uk/path/2\n' +
+            'This is some help text from the audit\n\n'
           );
         });
       });
