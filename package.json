@@ -14,7 +14,8 @@
     "start:lighthouse:junit": "node runLighthouse.js",
     "start:lighthouse:junit-headless": "A11Y_HEADLESS=true node runLighthouse.js",
     "lint": "npm run clean && eslint .",
-    "test": "mocha 'test/**/*.js'"
+    "test": "mocha 'test/**/*.js'",
+    "coverage": "nyc --reporter=lcov npm test && nyc report"
   },
   "author": "Andy Smith <andy.smith04@bbc.co.uk>",
   "license": "Apache-2.0",
@@ -31,6 +32,7 @@
     "eslint-plugin-mocha": "^4.9.0",
     "harp-minify": "^0.4.0",
     "mocha": "^3.5.0",
+    "nyc": "^11.4.1",
     "sinon": "^2.4.0"
   },
   "eslintConfig": {
