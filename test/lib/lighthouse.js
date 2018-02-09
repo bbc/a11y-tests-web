@@ -214,7 +214,7 @@ describe('lighthouse', () => {
       it('sets the duration for the test suite', () => {
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledTwice(reportBuilder.testSuite);
-          sandbox.assert.calledWith(reportBuilder.testSuite().time, 123456);
+          sandbox.assert.calledWith(reportBuilder.testSuite().time, 6000);
         });
       });
 
@@ -222,7 +222,7 @@ describe('lighthouse', () => {
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(reportBuilder.testSuite().testCase().className, 'www.bbc.co.uk./path/1');
           sandbox.assert.calledWith(reportBuilder.testSuite().testCase().name, '`[role]` values are valid.');
-          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().time, 30864);
+          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().time, 1200);
         });
       });
 
@@ -235,6 +235,18 @@ describe('lighthouse', () => {
             '\n' +
             'Failing elements:\n' +
             'span > strong - <strong>'
+          );
+        });
+      });
+
+      it('sets the correct error message for failed tests that have details with items', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(
+            reportBuilder.testSuite().testCase().failure,
+            'Error on http://www.bbc.co.uk/path/2\n' +
+            'Image alt help text\n\n' +
+            'Failing elements:\n' +
+            'button > svg[role="img"] - <svg role="img" class="cta__icon cta__icon--left ">'
           );
         });
       });
