@@ -40,6 +40,7 @@ describe('bbcA11y', () => {
     sandbox.stub(colourfulLog, 'log');
     sandbox.stub(colourfulLog, 'warning');
     sandbox.stub(fs, 'writeFileSync');
+    sandbox.stub(fs, 'unlinkSync');
   });
 
   afterEach(() => {
@@ -271,4 +272,11 @@ describe('bbcA11y', () => {
     });
   });
 
+  describe('clean()', () => {
+    it('unlinks the right file', () => {
+      bbcA11y.clean();
+
+      sandbox.assert.calledWith(fs.unlinkSync, 'a11y.js');
+    });
+  });
 });
