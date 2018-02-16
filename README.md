@@ -64,7 +64,6 @@ To run Google Lighthouse and generate a JUnit report:
 
 ```
 A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit
-
 ```
 
 This will run the Google Lighthouse accessibility audit against the URLs defined in the iplayer-web/all config file, and generate a JUnit report called lighthouse-report.xml.
