@@ -9,4 +9,5 @@ If you'd like to add your own config for your team, or contribute to this repo i
   * tests - `npm run test`
   * linting - `npm run lint`
 * Ensure the test coverage level is still good, by running `npm run coverage`
+* Update the readme if necessary
 * Submit a PR
