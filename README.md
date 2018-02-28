@@ -6,6 +6,7 @@ Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) and [Google Lighthouse](https:/
 
 ## Requirements
 - Node v6 or above
+- libgconf-2-4
 - Docker (if using the `ci` option)
 
 ## Installation of dependencies
