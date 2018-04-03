@@ -6,11 +6,11 @@ const homepage = require('./app-homepage-test');
 const lists = require('./app-lists-test');
 const myprogrammes = require('./app-myprogrammes-test');
 const playback = require('./app-playback-test');
-const { options } = require('./common');
+const { options, baseUrl } = require('./common');
 
 module.exports = {
   options,
-  baseUrl: 'https://www.bbc.co.uk',
+  baseUrl,
   paths: [
     ...features.paths,
     ...highlights.paths,
