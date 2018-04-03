@@ -2,8 +2,8 @@
   "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_10_5) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/62.0.3202.94 Safari/537.36",
   "lighthouseVersion": "2.6.0",
   "generatedTime": "2017-12-06T13:39:59.291Z",
-  "initialUrl": "https://frontdoor.iplayer.test.api.bbc.co.uk/iplayer/episode/p04qh1gk/face-to-face-dame-edith-sitwell",
-  "url": "https://frontdoor.iplayer.test.api.bbc.co.uk/iplayer/episode/p04qh1gk/face-to-face-dame-edith-sitwell",
+  "initialUrl": "https://www.bbc.co.uk/iplayer/episode/p04qh1gk/face-to-face-dame-edith-sitwell",
+  "url": "https://www.bbc.co.uk/iplayer/episode/p04qh1gk/face-to-face-dame-edith-sitwell",
   "audits": {
     "aria-roles": {
       "score": true,

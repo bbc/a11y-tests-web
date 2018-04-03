@@ -1,10 +1,10 @@
 'use strict';
 
-const { options } = require('./common');
+const { options, baseUrl } = require('./common');
 
 module.exports = {
   options,
-  baseUrl: 'https://frontdoor.iplayer.test.api.bbc.co.uk',
+  baseUrl,
   paths: [
     '/iplayer/recommendations'
   ],

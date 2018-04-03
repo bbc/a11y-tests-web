@@ -1,6 +1,6 @@
 'use strict';
 
-const { options: commonOptions } = require('./common');
+const { options: commonOptions, baseUrl } = require('./common');
 
 const commonSkips = commonOptions.skip;
 const playbackSpecificHides = ['carousel-outer-outer'];
@@ -17,7 +17,7 @@ const options = Object.assign({}, commonOptions,
 
 module.exports = {
   options,
-  baseUrl: 'https://frontdoor.iplayer.test.api.bbc.co.uk',
+  baseUrl,
   paths: [
     '/iplayer/episode/p04qh1gk/face-to-face-dame-edith-sitwell'
   ]
