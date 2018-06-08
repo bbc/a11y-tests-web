@@ -149,6 +149,13 @@ describe('bbcA11y', () => {
         );
       });
 
+      it('logs what domain and paths it will run against', () => {
+        bbcA11y.build();
+
+        sandbox.assert.calledWith(colourfulLog.log, 'Tests will run against: base.url /path/1 /path/2');
+        sandbox.assert.neverCalledWith(colourfulLog.log, sandbox.match('Tests will run signed in'));
+      });
+
     });
 
     describe('Paths and signed in paths and baseUrl but no options and no username and password', () => {
@@ -170,6 +177,13 @@ describe('bbcA11y', () => {
           'a11y.js',
           sandbox.match(matcher)
         );
+      });
+
+      it('logs what domain and paths it will run against', () => {
+        bbcA11y.build();
+
+        sandbox.assert.calledWith(colourfulLog.log, 'Tests will run against: base.url /path/1 /path/2');
+        sandbox.assert.neverCalledWith(colourfulLog.log, sandbox.match('Tests will run signed in'));
       });
 
       it('logs a warning', () => {
@@ -219,6 +233,13 @@ describe('bbcA11y', () => {
           'a11y.js',
           sandbox.match(matcher)
         );
+      });
+
+      it('logs what domain and paths it will run against', () => {
+        bbcA11y.build();
+
+        sandbox.assert.calledWith(colourfulLog.log, 'Tests will run against: base.url /path/1 /path/2');
+        sandbox.assert.calledWith(colourfulLog.log, sandbox.match('Tests will run signed in against: base.url /path/3 /path/4'));
       });
     });
 

@@ -1,15 +1,15 @@
 'use strict';
 
 const chromeLauncher = require('chrome-launcher');
-const external = require('../../lib/external');
 const fs = require('fs');
 const minify = require('harp-minify');
 const reportBuilder = require('junit-report-builder');
 const sandbox = require('sinon').sandbox.create();
 
 const colourfulLog = require('../../lib/colourfulLog');
-const lighthouseRunner = require('../../lib/lighthouse');
+const external = require('../../lib/external');
 const fakeResults = require('../fixtures/lighthouseReport');
+const lighthouseRunner = require('../../lib/lighthouse');
 
 function getMinifiedMatcher(code) {
   return (value) => {
@@ -307,6 +307,13 @@ describe('lighthouse', () => {
         process.env.A11Y_CONFIG = 'test/paths-and-baseurl';
       });
 
+      it('logs what domain and paths it will run against', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(colourfulLog.log, 'Tests will run against: base.url /path/1 /path/2');
+          sandbox.assert.neverCalledWith(colourfulLog.log, sandbox.match('Tests will run signed in'));
+        });
+      });
+
       it('launches lighthouse with the base url and path, flags and config', () => {
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledTwice(external.lighthouse);
@@ -316,6 +323,13 @@ describe('lighthouse', () => {
             EXPECTED_LIGHTHOUSE_FLAGS,
             EXPECTED_LIGHTHOUSE_CONFIG
           );
+        });
+      });
+
+      it('logs that it is running the audit against each URL', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(colourfulLog.log, 'Running audit for http://base.url/path/1');
+          sandbox.assert.calledWith(colourfulLog.log, 'Running audit for http://base.url/path/2');
         });
       });
 
@@ -339,6 +353,13 @@ describe('lighthouse', () => {
         process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
       });
 
+      it('logs what domain and paths it will run against', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(colourfulLog.log, 'Tests will run against: base.url /path/1 /path/2');
+          sandbox.assert.neverCalledWith(colourfulLog.log, sandbox.match('Tests will run signed in'));
+        });
+      });
+
       it('launches lighthouse for the signed out paths only', () => {
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledTwice(external.lighthouse);
@@ -359,6 +380,13 @@ describe('lighthouse', () => {
         process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
         process.env.A11Y_USERNAME = 'my-username';
         process.env.A11Y_PASSWORD = 'my-password';
+      });
+
+      it('logs what domain and paths it will run against', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(colourfulLog.log, 'Tests will run against: base.url /path/1 /path/2');
+          sandbox.assert.calledWith(colourfulLog.log, sandbox.match('Tests will run signed in against: base.url /path/3 /path/4'));
+        });
       });
 
       it('launches lighthouse for the signed out and signed in paths when username and password provided', () => {
