@@ -53,7 +53,7 @@ A11Y_CONFIG=iplayer-web/all npm run start:bbc-a11y:junit-headless
 
 ### Run bbc-a11y and generate a JUnit report using Docker
 
-If you don't have all the necessary libraries on your system required to run Electron, for example if you want to run this on a CI server, or if you want the process to always exit successfully, you can run this command to run them inside a Docker container and exit with success (thanks to Joseph Wynn for [the container](https://hub.docker.com/r/wildlyinaccurate/bbc-a11y-docker/)):
+If you don't have all the necessary libraries on your system required to run Electron, for example if you want to run this on a CI server, or if you want the process to always exit successfully, you can run this command to run them inside a Docker container and exit with success:
 
 ```
 A11Y_CONFIG=iplayer-web/all npm run start:bbc-a11y:ci
