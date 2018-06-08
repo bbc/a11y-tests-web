@@ -6,7 +6,9 @@ const homepage = require('./app-homepage-test');
 const lists = require('./app-lists-test');
 const myprogrammes = require('./app-myprogrammes-test');
 const playback = require('./app-playback-test');
-const { options, baseUrl } = require('./common');
+const { options } = require('./common');
+
+const baseUrl = process.env.A11Y_IPLAYER_WEB_BASE_URL || 'https://www.bbc.co.uk';
 
 module.exports = {
   options,
@@ -18,12 +20,6 @@ module.exports = {
     ...lists.paths,
     ...myprogrammes.paths,
     ...playback.paths,
-    '/iplayer/categories/arts/highlights',
-    '/iplayer/categories/arts/all?sort=atoz',
-    '/iplayer/categories/arts/all?sort=dateavailable',
-    '/iplayer/categories/drama-sci-fi-and-fantasy/highlights',
-    '/iplayer/categories/drama-sci-fi-and-fantasy/all?sort=atoz',
-    '/iplayer/categories/drama-sci-fi-and-fantasy/all?sort=dateavailable',
     '/iplayer/a-z/a',
     '/iplayer/guide',
     '/iplayer/watching',
