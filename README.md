@@ -96,7 +96,7 @@ If your product/team does not already have a folder, create one in `config`.
 You then need to create a new file in this folder which should either be a JSON file or a JS file that exports an object.
 
 The data should include:
-- `options` - Object - Options as defined by bbc-a11y, e.g. hide and skip. Note that these are currently **ignored** by Google Lighthouse.
+- `options` - Object - Options as defined by bbc-a11y, e.g. hide, skip and visit. Note that these are currently **ignored** by Google Lighthouse.
 - `baseUrl` - String - The domain to run the tests against, e.g. "https://www.bbc.co.uk"
 - `paths` - Array - The paths on that domain to run the tests against
 - `signedInPaths` - Array - An optional list of paths to run the tests against, after signing in to BBC ID.

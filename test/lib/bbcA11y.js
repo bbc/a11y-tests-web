@@ -158,6 +158,29 @@ describe('bbcA11y', () => {
 
     });
 
+    describe('Paths and baseUrl and visit', () => {
+      beforeEach(() => {
+        process.env.A11Y_CONFIG = 'test/paths-and-baseurl-and-visit';
+      });
+
+      it('outputs the basic config for the paths, with the defined baseUrl, and with the visit function', () => {
+        const expectedOutput = `
+          page( "http://base.url/path/1", { visit: function () { /* Do something */ }} )
+          page( "http://base.url/path/2", { visit: function () { /* Do something */ }} )
+        `;
+        const matcher = getMinifiedMatcher(expectedOutput);
+
+        bbcA11y.build();
+
+        sandbox.assert.calledWith(
+          fs.writeFileSync,
+          'a11y.js',
+          sandbox.match(matcher)
+        );
+      });
+
+    });
+
     describe('Paths and signed in paths and baseUrl but no options and no username and password', () => {
       beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
