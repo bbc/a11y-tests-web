@@ -158,15 +158,15 @@ describe('bbcA11y', () => {
 
     });
 
-    describe('Paths and baseUrl and visit', () => {
+    describe('Paths and baseUrl and visit and options', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-and-baseurl-and-visit';
+        process.env.A11Y_CONFIG = 'test/paths-and-baseurl-and-visit-and-options';
       });
 
       it('outputs the basic config for the paths, with the defined baseUrl, and with the visit function', () => {
         const expectedOutput = `
-          page( "http://base.url/path/1", { visit: function () { /* Do something */ }} )
-          page( "http://base.url/path/2", { visit: function () { /* Do something */ }} )
+          page( "http://base.url/path/1", { visit: function () { /* Do something */ }, some: "option" } )
+          page( "http://base.url/path/2", { visit: function () { /* Do something */ }, some: "option" } )
         `;
         const matcher = getMinifiedMatcher(expectedOutput);
 

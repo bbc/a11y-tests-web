@@ -7,6 +7,7 @@ module.exports = {
     '/path/2'
   ],
   options: {
+    some: 'option',
     visit: function () {
       /* Do something */
     }
