@@ -3,15 +3,13 @@
 const { options: commonOptions, baseUrl } = require('./common');
 
 const commonSkips = commonOptions.skip;
-const playbackSpecificHides = ['carousel-outer-outer'];
 
-const commonHides = commonOptions.hide;
-const playbackSpecificSkips = ['Headings: Content must follow headings'];
+// Following is awaiting this being fixed: https://github.com/bbc/bbc-a11y/issues/238
+const playbackSpecificSkips = ['Structure: Headings: Content must follow headings'];
 
 const options = Object.assign({}, commonOptions,
   {
-    skip: [...commonSkips, ...playbackSpecificSkips],
-    hide: [...commonHides, ...playbackSpecificHides]
+    skip: [...commonSkips, ...playbackSpecificSkips]
   }
 );
 
@@ -19,6 +17,6 @@ module.exports = {
   options,
   baseUrl,
   paths: [
-    '/iplayer/episode/p04qh1gk/face-to-face-dame-edith-sitwell'
+    '/iplayer/episode/p04qj936/face-to-face-adam-faith'
   ]
 };
