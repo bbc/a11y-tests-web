@@ -264,16 +264,6 @@ describe('lighthouse', () => {
         });
       });
 
-      it('sets the correct error message for failed tests that have no extended info or details', () => {
-        return lighthouseRunner.run().then(() => {
-          sandbox.assert.calledWith(
-            reportBuilder.testSuite().testCase().failure,
-            'Error on http://www.bbc.co.uk/path/2\n' +
-            'This is some help text from the audit\n\n'
-          );
-        });
-      });
-
       it('ignores manual tests and does not output these', () => {
         return lighthouseRunner.run().then(() => {
           sandbox.assert.neverCalledWith(
