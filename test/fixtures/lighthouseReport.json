@@ -172,6 +172,38 @@
         ]
       }
     },
+    "yet-another-test": {
+      "score": false,
+      "displayValue": "",
+      "rawValue": false,
+      "extendedInfo": {},
+      "scoringMode": "binary",
+      "name": "image-alt-2",
+      "category": "Accessibility",
+      "description": "Image elements do not have `[alt]` attributes description.",
+      "helpText": "Image alt help text 2",
+      "details": {
+        "type": "list",
+        "header": {
+          "type": "text",
+          "text": "View failing elements"
+        },
+        "items": [
+          {
+            "type": "node",
+            "selector": "button > svg#dodgy-svg",
+            "path": "1,HTML,1,BODY,14,DIV,1,DIV,0,DIV,2,DIV,3,DIV,1,DIV,3,DIV,3,DIV,0,UL,3,LI,0,BUTTON,0,svg",
+            "snippet": "<svg role=\"img\" id=\"dodgy-svg\" class=\"cta__icon cta__icon--left \">"
+          },
+          {
+            "type": "node",
+            "selector": "button > svg#dodgy-svg",
+            "path": "1,HTML,1,BODY,14,DIV,1,DIV,0,DIV,2,DIV,3,DIV,1,DIV,3,DIV,3,DIV,0,UL,3,LI,0,BUTTON,0,svg",
+            "snippet": "<svg role=\"img\" id=\"dodgy-svg\" class=\"cta__icon cta__icon--left \">"
+          }
+        ]
+      }
+    },
     "visual-order-follows-dom": {
       "score": false,
       "displayValue": "",

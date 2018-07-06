@@ -437,6 +437,16 @@ describe('lighthouse', () => {
           );
         });
       });
+
+      it('does not record a failure if there are no elements', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.neverCalledWith(
+            reportBuilder.testSuite().testCase().failure,
+            sandbox.match('Error on http://base.url/path/2\n' +
+            'Image alt help text 2\n\n')
+          );
+        });
+      });
     });
   });
 
