@@ -8,7 +8,6 @@ module.exports = {
   paths: [
     '/iplayer/features/accessibility',
     '/iplayer/features/downloads',
-    '/iplayer/features/iplayer-kids',
     '/iplayer/features/my-programmes',
     '/iplayer/features/sign-in',
     '/iplayer/features/30-days'
