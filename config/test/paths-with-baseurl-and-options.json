@@ -1,0 +1,11 @@
+{
+  "baseUrl": "http://base.url",
+  "paths": [
+    "/path/1",
+    "/path/2"
+  ],
+  "options": {
+    "some": "option",
+    "hide": ["dodgy-svg"]
+  }
+}

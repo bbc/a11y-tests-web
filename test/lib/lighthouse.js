@@ -222,7 +222,7 @@ describe('lighthouse', () => {
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(reportBuilder.testSuite().testCase().className, 'www.bbc.co.uk./path/1');
           sandbox.assert.calledWith(reportBuilder.testSuite().testCase().name, '`[role]` values are valid.');
-          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().time, 1200);
+          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().time, 6000 / Object.keys(fakeResults.audits).length);
         });
       });
 
@@ -423,6 +423,31 @@ describe('lighthouse', () => {
 
     });
 
+    describe('Paths and baseUrl and hide', () => {
+      beforeEach(() => {
+        process.env.A11Y_CONFIG = 'test/paths-with-baseurl-and-options';
+      });
+
+      it('does not record a failure on elements that are hidden', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(
+            reportBuilder.testSuite().testCase().failure,
+            'Error on http://base.url/path/2\n' +
+            'Image alt help text\n\n' +
+            'Failing elements:\n' +
+            'button > svg#good-svg - <svg role="img" id="good-svg" class="cta__icon cta__icon--left ">'
+          );
+
+          sandbox.assert.calledWith(
+            reportBuilder.testSuite().testCase().failure,
+            'Error on http://base.url/path/2\n' +
+            'Some help text\n\n' +
+            'Failing elements:\n' +
+            'button > svg#good-svg - <svg role="img" id="good-svg" class="cta__icon cta__icon--left ">'
+          );
+        });
+      });
+    });
   });
 
 });
