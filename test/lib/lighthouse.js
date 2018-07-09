@@ -37,6 +37,8 @@ const EXPECTED_LIGHTHOUSE_CONFIG = {
   }
 };
 
+const EXPECTED_TOTAL_DURATION = 6000;
+
 const EXPECTED_LOGIN_SCRIPT = `
   document.getElementById('user-identifier-input').value = 'my-username';
   document.getElementById('password-input').value = 'my-password';
@@ -219,10 +221,12 @@ describe('lighthouse', () => {
       });
 
       it('creates a test case for each result, with classname, name and time', () => {
+        const numberOfAudits = Object.keys(fakeResults.audits).length;
+        const expectedDurationPerAudit = EXPECTED_TOTAL_DURATION / numberOfAudits;
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(reportBuilder.testSuite().testCase().className, 'www.bbc.co.uk./path/1');
           sandbox.assert.calledWith(reportBuilder.testSuite().testCase().name, '`[role]` values are valid.');
-          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().time, 6000 / Object.keys(fakeResults.audits).length);
+          sandbox.assert.calledWith(reportBuilder.testSuite().testCase().time, expectedDurationPerAudit);
         });
       });
 
