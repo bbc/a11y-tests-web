@@ -139,16 +139,119 @@
         ]
       }
     },
+    "another-test": {
+      "score": false,
+      "displayValue": "",
+      "rawValue": false,
+      "extendedInfo": {},
+      "scoringMode": "binary",
+      "name": "image-alt",
+      "category": "Accessibility",
+      "description": "Image elements do not have `[alt]` attributes.",
+      "helpText": "Image alt help text",
+      "details": {
+        "type": "list",
+        "header": {
+          "type": "text",
+          "text": "View failing elements"
+        },
+        "items": [
+          {
+            "type": "node",
+            "selector": "button > svg#dodgy-svg",
+            "path": "1,HTML,1,BODY,14,DIV,1,DIV,0,DIV,2,DIV,3,DIV,1,DIV,3,DIV,3,DIV,0,UL,3,LI,0,BUTTON,0,svg",
+            "snippet": "<svg role=\"img\" id=\"dodgy-svg\" class=\"cta__icon cta__icon--left \">"
+          },
+
+          {
+            "type": "node",
+            "selector": "button > svg#good-svg",
+            "path": "1,HTML,1,BODY,14,DIV,1,DIV,0,DIV,2,DIV,3,DIV,1,DIV,3,DIV,3,DIV,0,UL,3,LI,0,BUTTON,0,svg",
+            "snippet": "<svg role=\"img\" id=\"good-svg\" class=\"cta__icon cta__icon--left \">"
+          }
+        ]
+      }
+    },
+    "yet-another-test": {
+      "score": false,
+      "displayValue": "",
+      "rawValue": false,
+      "extendedInfo": {},
+      "scoringMode": "binary",
+      "name": "image-alt-2",
+      "category": "Accessibility",
+      "description": "Image elements do not have `[alt]` attributes description.",
+      "helpText": "Image alt help text 2",
+      "details": {
+        "type": "list",
+        "header": {
+          "type": "text",
+          "text": "View failing elements"
+        },
+        "items": [
+          {
+            "type": "node",
+            "selector": "button > svg#dodgy-svg",
+            "path": "1,HTML,1,BODY,14,DIV,1,DIV,0,DIV,2,DIV,3,DIV,1,DIV,3,DIV,3,DIV,0,UL,3,LI,0,BUTTON,0,svg",
+            "snippet": "<svg role=\"img\" id=\"dodgy-svg\" class=\"cta__icon cta__icon--left \">"
+          },
+          {
+            "type": "node",
+            "selector": "button > svg#dodgy-svg",
+            "path": "1,HTML,1,BODY,14,DIV,1,DIV,0,DIV,2,DIV,3,DIV,1,DIV,3,DIV,3,DIV,0,UL,3,LI,0,BUTTON,0,svg",
+            "snippet": "<svg role=\"img\" id=\"dodgy-svg\" class=\"cta__icon cta__icon--left \">"
+          }
+        ]
+      }
+    },
     "visual-order-follows-dom": {
       "score": false,
       "displayValue": "",
       "rawValue": false,
+      "extendedInfo": {
+        "value": {
+          "id": "label",
+          "impact": "critical",
+          "description": "Ensures every something does something",
+          "help": "Some help text",
+          "helpUrl": "https://dequeuniversity.com/rules/axe/2.4/label?application=axeAPI",
+          "nodes": [
+            {
+              "any": null,
+              "all": null,
+              "none": null,
+              "impact": "critical",
+              "html": "",
+              "element": null,
+              "target": [
+                "button > svg#dodgy-svg"
+              ],
+              "failureSummary": "Failure text",
+              "path": "",
+              "snippet": "<svg role=\"img\" id=\"dodgy-svg\" class=\"cta__icon cta__icon--left \">"
+            },
+            {
+              "any": null,
+              "all": null,
+              "none": null,
+              "impact": "critical",
+              "html": "",
+              "element": null,
+              "target": [
+                "button > svg#good-svg"
+              ],
+              "failureSummary": "Failure text",
+              "path": "",
+              "snippet": "<svg role=\"img\" id=\"good-svg\" class=\"cta__icon cta__icon--left \">"
+            }
+          ]
+        }
+      },
       "scoringMode": "binary",
-      "informative": true,
-      "manual": true,
-      "name": "visual-order-follows-dom",
-      "description": "Visual order on the page follows DOM order",
-      "helpText": "DOM order matches the visual order, improving navigation for assistive technology. [Learn more](https://developers.google.com/web/fundamentals/accessibility/how-to-review#try_it_with_a_screen_reader)."
+      "name": "label",
+      "description": "Form elements do not have associated labels.",
+      "helpText": "Some help text",
+      "details": {}
     }
   },
   "timing": {
