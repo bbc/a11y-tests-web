@@ -7,7 +7,7 @@ Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) and [Google Lighthouse](https:/
 ## Requirements
 - Node v6 or above
 - libgconf-2-4
-- Docker (if using the `ci` option)
+- Docker (if using the `ci` option) - NB The docker image is not always necessary to use bbc-a11y for continuous integration. For example, in TravisCI one option available is to prepend the run script with xvfb-run - [relevant TravisCI documentation](https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI). Furthermore, an alternative to using the docker image in Jenkins might be to use the [xvfb plugin](https://wiki.jenkins.io/display/JENKINS/Xvfb+Plugin) - though this is untested.
 
 ## Installation of dependencies
 
