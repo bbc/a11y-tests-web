@@ -1,12 +1,7 @@
 'use strict';
 
-const { options } = require('./common');
-
-const baseUrl = process.env.A11Y_SIMORGH_BASE_URL || 'http://localhost:7080';
-
 module.exports = {
-  options,
-  baseUrl,
+  baseUrl: 'http://localhost:7080',
   paths: [
     '/article/scenario-25',
     '/article/scenario-27'
