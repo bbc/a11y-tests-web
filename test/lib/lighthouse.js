@@ -37,6 +37,18 @@ const EXPECTED_LIGHTHOUSE_CONFIG = {
   }
 };
 
+const EXPECTED_CUSTOM_LIGHTHOUSE_CONFIG = {
+  extends: 'lighthouse:default',
+  settings: {
+    onlyCategories: ['accessibility']
+  },
+  categories: {
+    accessibility: {
+      weight: 1
+    }
+  }
+};
+
 const EXPECTED_TOTAL_DURATION = 6000;
 
 const EXPECTED_LOGIN_SCRIPT = `
@@ -296,6 +308,24 @@ describe('lighthouse', () => {
 
     });
 
+    describe('Custom Lighthouse config', () => {
+      beforeEach(() => {
+        process.env.A11Y_CONFIG = 'test/paths-and-baseurl-and-custom-lighthouse.js';
+      });
+
+      it('launches lighthouse with the base url and path, flags and custom lighthouse config', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledOnce(external.lighthouse);
+          sandbox.assert.calledWith(
+            external.lighthouse,
+            'http://base.url/path/1',
+            EXPECTED_LIGHTHOUSE_FLAGS,
+            EXPECTED_CUSTOM_LIGHTHOUSE_CONFIG
+          );
+        });
+      });
+    });
+
     describe('Paths and baseUrl', () => {
       beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-and-baseurl';
@@ -447,7 +477,7 @@ describe('lighthouse', () => {
           sandbox.assert.neverCalledWith(
             reportBuilder.testSuite().testCase().failure,
             sandbox.match('Error on http://base.url/path/2\n' +
-            'Image alt help text 2\n\n')
+              'Image alt help text 2\n\n')
           );
         });
       });
