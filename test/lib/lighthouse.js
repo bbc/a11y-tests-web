@@ -40,7 +40,7 @@ const EXPECTED_LIGHTHOUSE_CONFIG = {
 const EXPECTED_CUSTOM_LIGHTHOUSE_CONFIG = {
   extends: 'lighthouse:default',
   settings: {
-    onlyCategories: ['accessibility']
+    onlyCategories: ['accessibility', 'seo', 'pwa']
   },
   categories: {
     accessibility: {

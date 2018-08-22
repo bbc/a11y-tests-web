@@ -9,7 +9,7 @@ module.exports = {
     config: {
       extends: 'lighthouse:default',
       settings: {
-        onlyCategories: ['accessibility']
+        onlyCategories: ['accessibility', 'seo', 'pwa']
       },
       categories: {
         accessibility: {
