@@ -5,5 +5,22 @@ module.exports = {
   paths: [
     '/news/articles/c0000000025o',
     '/news/articles/c0000000027o'
-  ]
+  ],
+  LIGHTHOUSE_OPTS: {
+    config: {
+      extends: 'lighthouse:default',
+      settings: {
+        onlyCategories: ['accessibility']
+      },
+      categories: {
+        accessibility: {
+          weight: 1
+        }
+      }
+    },
+    flags: {
+      logLevel: 'silent',
+      output: 'json'
+    }
+  }
 };
