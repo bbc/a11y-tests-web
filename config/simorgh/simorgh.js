@@ -3,7 +3,7 @@
 module.exports = {
   baseUrl: 'http://localhost:7080',
   paths: [
-    '/article/scenario-25',
-    '/article/scenario-27'
+    '/news/articles/c0000000025o',
+    '/news/articles/c0000000027o'
   ]
 };
