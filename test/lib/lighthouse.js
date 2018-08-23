@@ -477,7 +477,7 @@ describe('lighthouse', () => {
           sandbox.assert.neverCalledWith(
             reportBuilder.testSuite().testCase().failure,
             sandbox.match('Error on http://base.url/path/2\n' +
-              'Image alt help text 2\n\n')
+            'Image alt help text 2\n\n')
           );
         });
       });
