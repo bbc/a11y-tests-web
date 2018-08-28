@@ -12,6 +12,7 @@
     "start:bbc-a11y:junit-headless": "npm run build:bbc-a11y && bbc-a11y --reporter ./lib/bbcA11YJUnitReporter.js && npm run clean",
     "start:bbc-a11y:ci": "npm run build:bbc-a11y && bash -c \"docker run --rm --tty --volume $PWD:/ws bbca11y/bbc-a11y-docker --config /ws/a11y.js --reporter /ws/lib/bbcA11YJUnitReporter.js; exit 0;\" && npm run clean",
     "start:lighthouse:junit": "node runLighthouse.js",
+    "start:lighthouse:json": "node runLighthouse.js > lighthouse-report.json",
     "start:lighthouse:junit-headless": "A11Y_HEADLESS=true node runLighthouse.js",
     "lint": "npm run clean && eslint .",
     "test": "mocha 'test/**/*.js'",

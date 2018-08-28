@@ -3,6 +3,7 @@ node_modules/
 a11y.js
 bbc-a11y-report.xml
 lighthouse-report.xml
+lighthouse-report.json
 .nyc_output/
 coverage/
 
