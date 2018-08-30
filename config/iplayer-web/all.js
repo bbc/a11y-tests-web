@@ -7,6 +7,7 @@ const lists = require('./app-lists-test');
 const myprogrammes = require('./app-myprogrammes-test');
 const playback = require('./app-playback-test');
 const guide = require('./app-guide-test');
+const atoz = require('./app-atoz-test');
 const { options } = require('./common');
 
 const baseUrl = process.env.A11Y_IPLAYER_WEB_BASE_URL || 'https://www.bbc.co.uk';
@@ -22,7 +23,7 @@ module.exports = {
     ...myprogrammes.paths,
     ...playback.paths,
     ...guide.paths,
-    '/iplayer/a-z/a',
+    ...atoz.paths,
     '/iplayer/watching',
     '/iplayer/added',
     '/bbcfour/collections'
