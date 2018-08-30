@@ -5,7 +5,6 @@ module.exports = {
   paths: [
     '/news/articles/c0000000025o',
     '/news/articles/c0000000027o'
-    //    '/news/articles/c0000000000o'
   ],
   LIGHTHOUSE_OPTS: {
     config: {

@@ -57,6 +57,8 @@ const EXPECTED_LOGIN_SCRIPT = `
   document.getElementById('submit-button').click();
 `;
 
+const OUTPUT_JSON = '/lighthouse-report.json';
+
 describe('lighthouse', () => {
 
   let originalEnv;
@@ -170,9 +172,22 @@ describe('lighthouse', () => {
 
     });
 
+    describe('No OUTPUT_JSON', () => {
+      beforeEach(() => {
+        process.env.OUTPUT_JSON = undefined;
+      });
+
+      it('logs an info message if no OUTPUT_JSON is set', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledWith(colourfulLog.log, 'No JSON output path provided. Use the OUTPUT_JSON environment variable to set one.');
+        });
+      });
+    });
+
     describe('Paths but no baseUrl', () => {
       beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/just-paths';
+        process.env.OUTPUT_JSON = OUTPUT_JSON;
       });
 
       it('launches chrome once per path with the right options if A11Y_HEADLESS not set', () => {
@@ -298,11 +313,13 @@ describe('lighthouse', () => {
         });
       });
 
-      it('outputs the report to the file and the logging output', () => {
+      it('outputs reports to json and xml files and the logging output', () => {
+
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledOnce(reportBuilder.build);
           sandbox.assert.calledWith(fs.writeFileSync, sandbox.match(/lighthouse-report\.xml$/), 'Built report');
           sandbox.assert.calledWith(colourfulLog.log, 'Built report');
+          sandbox.assert.calledWithMatch(fs.writeFileSync.getCall(1), sandbox.match(OUTPUT_JSON), sandbox.match('Best Practices'));
         });
       });
 
@@ -477,7 +494,7 @@ describe('lighthouse', () => {
           sandbox.assert.neverCalledWith(
             reportBuilder.testSuite().testCase().failure,
             sandbox.match('Error on http://base.url/path/2\n' +
-            'Image alt help text 2\n\n')
+              'Image alt help text 2\n\n')
           );
         });
       });
