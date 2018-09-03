@@ -83,7 +83,7 @@ A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit-headless
 
 ### Run Google Lighthouse with custom configs, e.g. simorgh/simorgh
 
-Lighthouse can be configured to run Progressive Web App, SEO, Best Practises and Performance tests. See the config file in `config/simorgh/simorgh.js`. `a11y-tests-web` will generate a summary report in JSON, saved to `a11y-tests-web/lighthouse-report.json`. An OUTPUT_JSON path can also be specified.
+Lighthouse can be configured to run Progressive Web App, SEO, and Best Practice tests. See the config file in `config/simorgh/simorgh.js`. `a11y-tests-web` will generate a summary report in JSON, saved to `a11y-tests-web/lighthouse-report.json`. An OUTPUT_JSON path can also be specified.
 
 Run lighthouse tests and save to OUTPUT_JSON path
 ```
