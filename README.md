@@ -81,6 +81,17 @@ To run Google Lighthouse in headless mode and generate a JUnit report:
 A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit-headless
 ```
 
+### Run Google Lighthouse with custom configs, e.g. simorgh/simorgh
+
+Lighthouse can be configured to run Progressive Web App, SEO, Best Practises and Performance tests. See the config file in `config/simorgh/simorgh.js`. `a11y-tests-web` will generate a summary report in JSON, saved to `a11y-tests-web/lighthouse-report.json`. An OUTPUT_JSON path can also be specified.
+
+Run lighthouse tests and save to OUTPUT_JSON path
+```
+A11Y_CONFIG=simorgh/simorgh OUTPUT_JSON='/../lighthouse-report.json' npm run start:lighthouse:junit 
+```
+
+
+
 ## Running on Jenkins
 
 If you'd like to run this on your Jenkins server, ensure your Jenkins meets the requirements above and has a [JUnit plugin](https://plugins.jenkins.io/junit) installed and then:
