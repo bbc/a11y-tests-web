@@ -5,6 +5,7 @@
 Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) and [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) to run a suite of automated tests to test accessibility across a set of webpages, defined in a config file.
 
 ## Requirements
+
 - Node v6 or above
 - libgconf-2-4
 - Docker (if using the `ci` option) - NB The docker image is not always necessary to use bbc-a11y for continuous integration. For example, in TravisCI one option available is to prepend the run script with xvfb-run - [relevant TravisCI documentation](https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI). Furthermore, an alternative to using the docker image in Jenkins might be to use the [xvfb plugin](https://wiki.jenkins.io/display/JENKINS/Xvfb+Plugin) - though this is untested.
@@ -81,20 +82,24 @@ To run Google Lighthouse in headless mode and generate a JUnit report:
 A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit-headless
 ```
 
-### Run Google Lighthouse with custom configs, e.g. simorgh/simorgh
+### Run Google Lighthouse with custom categories, e.g. simorgh/simorgh
 
-Lighthouse can be configured to run Progressive Web App, SEO, and Best Practice tests. See the config file in `config/simorgh/simorgh.js`. `a11y-tests-web` will generate a summary report in JSON, saved to `a11y-tests-web/lighthouse-report.json`. An OUTPUT_JSON path can also be specified.
+By default, `a11y-tests-web` will only run the `Accessibility` Lighthouse category. It can be configured to run the other Lighthouse categories: `Progressive Web App`, `SEO`, and `Best Practice` (`Performance` is currently unavailable) tests.
 
-Run lighthouse tests and save to OUTPUT_JSON path
+To test these other Lighthouse categories, add a `lighthouseCategories` array to the config. See the config file in `config/simorgh/simorgh.js` for an example setup.
+
+`a11y-tests-web` will generate a summary report of the lighthouse results in JSON, saved to `a11y-tests-web/lighthouse-report.json`. You can pass an `OUTPUT_JSON` environment variable to vary the output location of the JSON file. This a path relative to where the `a11y-tests-web` code files live.
+
+To lun lighthouse tests and save to `OUTPUT_JSON` path:
+
 ```
-A11Y_CONFIG=simorgh/simorgh OUTPUT_JSON='/../lighthouse-report.json' npm run start:lighthouse:junit 
+A11Y_CONFIG=simorgh/simorgh OUTPUT_JSON='/../lighthouse-report.json' npm run start:lighthouse:junit
 ```
-
-
 
 ## Running on Jenkins
 
 If you'd like to run this on your Jenkins server, ensure your Jenkins meets the requirements above and has a [JUnit plugin](https://plugins.jenkins.io/junit) installed and then:
+
 - Create a Jenkins job
 - Add this repo to the Jenkins job
 - Get the job to run `npm i --production`
@@ -107,6 +112,7 @@ If your product/team does not already have a folder, create one in `config`.
 You then need to create a new file in this folder which should either be a JSON file or a JS file that exports an object.
 
 The data should include:
+
 - `options` - Object - Options as defined by bbc-a11y, e.g. hide, skip and visit. Note that skip and visit are currently **ignored** by Google Lighthouse, but hide is used.
 - `baseUrl` - String - The domain to run the tests against, e.g. "https://www.bbc.co.uk"
 - `paths` - Array - The paths on that domain to run the tests against
@@ -115,4 +121,5 @@ The data should include:
 Note that if you have a list of `signedInPaths`, the username and password to use when logging in to BBC ID should be specified using the environment variables A11Y_USERNAME and A11Y_PASSWORD.
 
 ## Contributing
+
 See [CONTRIBUTING.md](https://github.com/bbc/a11y-tests-web/blob/master/CONTRIBUTING.md)
