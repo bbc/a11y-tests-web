@@ -319,7 +319,7 @@ describe('lighthouse', () => {
           sandbox.assert.calledOnce(reportBuilder.build);
           sandbox.assert.calledWith(fs.writeFileSync, sandbox.match(/lighthouse-report\.xml$/), 'Built report');
           sandbox.assert.calledWith(colourfulLog.log, 'Built report');
-          sandbox.assert.calledWithMatch(fs.writeFileSync.getCall(1), sandbox.match(OUTPUT_JSON), sandbox.match('Best Practices'));
+          sandbox.assert.calledWith(fs.writeFileSync, sandbox.match(OUTPUT_JSON), sandbox.match('Best Practices'));
         });
       });
 
