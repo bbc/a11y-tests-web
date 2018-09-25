@@ -6,5 +6,5 @@ As well as all the normal usage options, the iPlayer Web tests can be pointed at
 
 
 ```
-A11Y_CONFIG=iplayer-web/all A11Y_IPLAYER_WEB_BASE_URL=https://some.url npm run start:bbc-a11y
+ATW_CONFIG=iplayer-web/all A11Y_IPLAYER_WEB_BASE_URL=https://some.url npm run start:bbc-a11y
 ```

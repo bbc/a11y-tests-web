@@ -57,7 +57,7 @@ const EXPECTED_LOGIN_SCRIPT = `
   document.getElementById('submit-button').click();
 `;
 
-const OUTPUT_JSON = '/lighthouse-report.json';
+const ATW_OUTPUT_JSON = '/lighthouse-report.json';
 
 describe('lighthouse', () => {
 
@@ -118,11 +118,11 @@ describe('lighthouse', () => {
 
   describe('run()', () => {
 
-    describe('No A11Y_CONFIG', () => {
+    describe('No ATW_CONFIG', () => {
 
       it('logs the error message about no config', () => {
         return lighthouseRunner.run().then(() => {
-          sandbox.assert.calledWith(colourfulLog.error, 'No config selected. Use the A11Y_CONFIG environment variable to set one.');
+          sandbox.assert.calledWith(colourfulLog.error, 'No config selected. Use the ATW_CONFIG environment variable to set one.');
         });
       });
 
@@ -136,7 +136,7 @@ describe('lighthouse', () => {
 
     describe('No config with the given name', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'this-is-not-a-valid-config';
+        process.env.ATW_CONFIG = 'this-is-not-a-valid-config';
       });
 
       it('logs the error message about no config', () => {
@@ -155,7 +155,7 @@ describe('lighthouse', () => {
 
     describe('No paths in the config', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/no-paths';
+        process.env.ATW_CONFIG = 'test/no-paths';
       });
 
       it('logs the error message about no paths', () => {
@@ -172,33 +172,33 @@ describe('lighthouse', () => {
 
     });
 
-    describe('No OUTPUT_JSON', () => {
+    describe('No ATW_OUTPUT_JSON', () => {
       beforeEach(() => {
-        process.env.OUTPUT_JSON = undefined;
+        process.env.ATW_OUTPUT_JSON = undefined;
       });
 
-      it('logs an info message if no OUTPUT_JSON is set', () => {
+      it('logs an info message if no ATW_OUTPUT_JSON is set', () => {
         return lighthouseRunner.run().then(() => {
-          sandbox.assert.calledWith(colourfulLog.log, 'No JSON output path provided. Use the OUTPUT_JSON environment variable to set one.');
+          sandbox.assert.calledWith(colourfulLog.log, 'No JSON output path provided. Use the ATW_OUTPUT_JSON environment variable to set one.');
         });
       });
     });
 
     describe('Paths but no baseUrl', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
-        process.env.OUTPUT_JSON = OUTPUT_JSON;
+        process.env.ATW_CONFIG = 'test/just-paths';
+        process.env.ATW_OUTPUT_JSON = ATW_OUTPUT_JSON;
       });
 
-      it('launches chrome once per path with the right options if A11Y_HEADLESS not set', () => {
+      it('launches chrome once per path with the right options if ATW_HEADLESS not set', () => {
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(chromeLauncher.launch, { chromeFlags: ['--disable-gpu', '--no-sandbox'] });
           sandbox.assert.calledTwice(chromeLauncher.launch);
         });
       });
 
-      it('launches chrome once per path with the right options if A11Y_HEADLESS is set', () => {
-        process.env.A11Y_HEADLESS = 'true';
+      it('launches chrome once per path with the right options if ATW_HEADLESS is set', () => {
+        process.env.ATW_HEADLESS = 'true';
 
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledWith(chromeLauncher.launch, { chromeFlags: ['--headless', '--disable-gpu', '--no-sandbox'] });
@@ -319,7 +319,7 @@ describe('lighthouse', () => {
           sandbox.assert.calledOnce(reportBuilder.build);
           sandbox.assert.calledWith(fs.writeFileSync, sandbox.match(/lighthouse-report\.xml$/), 'Built report');
           sandbox.assert.calledWith(colourfulLog.log, 'Built report');
-          sandbox.assert.calledWith(fs.writeFileSync, sandbox.match(OUTPUT_JSON), sandbox.match('Best Practices'));
+          sandbox.assert.calledWith(fs.writeFileSync, sandbox.match(ATW_OUTPUT_JSON), sandbox.match('Best Practices'));
         });
       });
 
@@ -327,7 +327,7 @@ describe('lighthouse', () => {
 
     describe('Custom Lighthouse config', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-and-baseurl-and-custom-lighthouse.js';
+        process.env.ATW_CONFIG = 'test/paths-and-baseurl-and-custom-lighthouse.js';
       });
 
       it('launches lighthouse with the base url and path, flags and custom lighthouse config', () => {
@@ -345,7 +345,7 @@ describe('lighthouse', () => {
 
     describe('Paths and baseUrl', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-and-baseurl';
+        process.env.ATW_CONFIG = 'test/paths-and-baseurl';
       });
 
       it('logs what domain and paths it will run against', () => {
@@ -391,7 +391,7 @@ describe('lighthouse', () => {
 
     describe('Paths and signed in paths and baseUrl but no username and password', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
+        process.env.ATW_CONFIG = 'test/paths-with-signed-in-and-baseurl';
       });
 
       it('logs what domain and paths it will run against', () => {
@@ -411,16 +411,16 @@ describe('lighthouse', () => {
 
       it('logs a warning about skipping signed in paths', () => {
         return lighthouseRunner.run().then(() => {
-          sandbox.assert.calledWith(colourfulLog.warning, 'Skipping signed in paths because a username and/or password were not specified. (Use A11Y_USERNAME and A11Y_PASSWORD environment variables to set them)');
+          sandbox.assert.calledWith(colourfulLog.warning, 'Skipping signed in paths because a username and/or password were not specified. (Use ATW_USERNAME and ATW_PASSWORD environment variables to set them)');
         });
       });
     });
 
     describe('Paths and signed in paths and baseUrl with a username and password', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
-        process.env.A11Y_USERNAME = 'my-username';
-        process.env.A11Y_PASSWORD = 'my-password';
+        process.env.ATW_CONFIG = 'test/paths-with-signed-in-and-baseurl';
+        process.env.ATW_USERNAME = 'my-username';
+        process.env.ATW_PASSWORD = 'my-password';
       });
 
       it('logs what domain and paths it will run against', () => {
@@ -466,7 +466,7 @@ describe('lighthouse', () => {
 
     describe('Paths and baseUrl and hide', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-with-baseurl-and-options';
+        process.env.ATW_CONFIG = 'test/paths-with-baseurl-and-options';
       });
 
       it('does not record a failure on elements that are hidden', () => {

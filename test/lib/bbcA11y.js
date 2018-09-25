@@ -51,12 +51,12 @@ describe('bbcA11y', () => {
 
   describe('build()', () => {
 
-    describe('No A11Y_CONFIG', () => {
+    describe('No ATW_CONFIG', () => {
 
       it('logs the error message about no config', () => {
         bbcA11y.build();
 
-        sandbox.assert.calledWith(colourfulLog.error, 'No config selected. Use the A11Y_CONFIG environment variable to set one.');
+        sandbox.assert.calledWith(colourfulLog.error, 'No config selected. Use the ATW_CONFIG environment variable to set one.');
       });
 
       it('exits with status code 1', () => {
@@ -69,7 +69,7 @@ describe('bbcA11y', () => {
 
     describe('No config with the given name', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'this-is-not-a-valid-config';
+        process.env.ATW_CONFIG = 'this-is-not-a-valid-config';
       });
 
       it('logs the error message about no config', () => {
@@ -88,7 +88,7 @@ describe('bbcA11y', () => {
 
     describe('No paths in the config', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/no-paths';
+        process.env.ATW_CONFIG = 'test/no-paths';
       });
 
       it('logs the error message about no paths', () => {
@@ -107,7 +107,7 @@ describe('bbcA11y', () => {
 
     describe('Paths but no baseUrl or options', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/just-paths';
+        process.env.ATW_CONFIG = 'test/just-paths';
       });
 
       it('outputs the basic config for the paths, with the baseUrl set to http://www.bbc.co.uk', () => {
@@ -130,7 +130,7 @@ describe('bbcA11y', () => {
 
     describe('Paths and baseUrl but no options', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-and-baseurl';
+        process.env.ATW_CONFIG = 'test/paths-and-baseurl';
       });
 
       it('outputs the basic config for the paths, with the defined baseUrl', () => {
@@ -160,7 +160,7 @@ describe('bbcA11y', () => {
 
     describe('Paths and baseUrl and visit and options', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-and-baseurl-and-visit-and-options';
+        process.env.ATW_CONFIG = 'test/paths-and-baseurl-and-visit-and-options';
       });
 
       it('outputs the basic config for the paths, with the defined baseUrl, and with the visit function', () => {
@@ -183,7 +183,7 @@ describe('bbcA11y', () => {
 
     describe('Paths and signed in paths and baseUrl but no options and no username and password', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
+        process.env.ATW_CONFIG = 'test/paths-with-signed-in-and-baseurl';
       });
 
       it('outputs the basic config for the paths but not signed in paths', () => {
@@ -212,15 +212,15 @@ describe('bbcA11y', () => {
       it('logs a warning', () => {
         bbcA11y.build();
 
-        sandbox.assert.calledWith(colourfulLog.warning, 'Skipping signed in paths because a username and/or password were not specified. (Use A11Y_USERNAME and A11Y_PASSWORD environment variables to set them)');
+        sandbox.assert.calledWith(colourfulLog.warning, 'Skipping signed in paths because a username and/or password were not specified. (Use ATW_USERNAME and ATW_PASSWORD environment variables to set them)');
       });
     });
 
     describe('Paths and signed in paths and baseUrl and username and password but no options', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
-        process.env.A11Y_USERNAME = 'my-username';
-        process.env.A11Y_PASSWORD = 'my-password';
+        process.env.ATW_CONFIG = 'test/paths-with-signed-in-and-baseurl';
+        process.env.ATW_USERNAME = 'my-username';
+        process.env.ATW_PASSWORD = 'my-password';
       });
 
       it('outputs the basic config for the paths and signed in paths when username and password provided', () => {
@@ -268,9 +268,9 @@ describe('bbcA11y', () => {
 
     describe('Paths and signed in paths and baseUrl and options', () => {
       beforeEach(() => {
-        process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl-and-options';
-        process.env.A11Y_USERNAME = 'my-username';
-        process.env.A11Y_PASSWORD = 'my-password';
+        process.env.ATW_CONFIG = 'test/paths-with-signed-in-and-baseurl-and-options';
+        process.env.ATW_USERNAME = 'my-username';
+        process.env.ATW_PASSWORD = 'my-password';
       });
 
       it('outputs the config for the paths and signed in paths when username and password provided with the options provided', () => {
