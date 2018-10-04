@@ -90,7 +90,7 @@ To test these other Lighthouse categories, add a `lighthouseCategories` array to
 
 `a11y-tests-web` will generate a summary report of the lighthouse results in JSON, saved to `a11y-tests-web/lighthouse-report.json`. You can pass an `ATW_OUTPUT_JSON` environment variable to vary the output location of the JSON file. This a path relative to where the `a11y-tests-web` code files live.
 
-To lun lighthouse tests and save to `ATW_OUTPUT_JSON` path:
+To run lighthouse tests and save to `ATW_OUTPUT_JSON` path:
 
 ```
 ATW_CONFIG=simorgh/simorgh ATW_OUTPUT_JSON='/../lighthouse-report.json' npm run start:lighthouse:junit
