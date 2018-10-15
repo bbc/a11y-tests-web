@@ -88,7 +88,7 @@ By default, `a11y-tests-web` will only run the `Accessibility` Lighthouse catego
 
 To test these other Lighthouse categories, add a `lighthouseCategories` array to the config. See the config file in `config/simorgh/simorgh.js` for an example setup.
 
-`a11y-tests-web` will generate a summary report of the lighthouse results in JSON, saved to `a11y-tests-web/lighthouse-report.json`. You can pass an `ATW_OUTPUT_JSON` environment variable to vary the output location of the JSON file. This a path relative to where the `a11y-tests-web` code files live.
+`a11y-tests-web` can generate a summary report of the lighthouse results in JSON. You can pass an `ATW_OUTPUT_JSON` environment variable to set the relative output location of the JSON file. This a path relative to where the `a11y-tests-web` code files live.
 
 To run lighthouse tests and save to `ATW_OUTPUT_JSON` path:
 
