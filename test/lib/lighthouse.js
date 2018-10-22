@@ -172,18 +172,6 @@ describe('lighthouse', () => {
 
     });
 
-    describe('No ATW_OUTPUT_JSON', () => {
-      beforeEach(() => {
-        process.env.ATW_OUTPUT_JSON = undefined;
-      });
-
-      it('logs an info message if no ATW_OUTPUT_JSON is set', () => {
-        return lighthouseRunner.run().then(() => {
-          sandbox.assert.calledWith(colourfulLog.log, 'No JSON output path provided. Use the ATW_OUTPUT_JSON environment variable to set one.');
-        });
-      });
-    });
-
     describe('Paths but no baseUrl', () => {
       beforeEach(() => {
         process.env.ATW_CONFIG = 'test/just-paths';
@@ -319,7 +307,11 @@ describe('lighthouse', () => {
           sandbox.assert.calledOnce(reportBuilder.build);
           sandbox.assert.calledWith(fs.writeFileSync, sandbox.match(/lighthouse-report\.xml$/), 'Built report');
           sandbox.assert.calledWith(colourfulLog.log, 'Built report');
-          sandbox.assert.calledWith(fs.writeFileSync, sandbox.match(ATW_OUTPUT_JSON), sandbox.match('Best Practices'));
+
+          const fsSyncWriteToJson = fs.writeFileSync.getCall(0);
+
+          sandbox.assert.match(fsSyncWriteToJson.args[0], ATW_OUTPUT_JSON);
+          sandbox.assert.match(JSON.parse(fsSyncWriteToJson.args[1]), { urls: sandbox.match.array });
         });
       });
 
