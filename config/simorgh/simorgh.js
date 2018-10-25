@@ -3,8 +3,8 @@
 module.exports = {
   baseUrl: 'http://localhost:7080',
   paths: [
-    '/news/articles/c0000000025o',
-    '/news/articles/c0000000027o'
+    '/news/articles/c85pqyj5m2ko',
+    '/news/articles/c9rpqy7pmypo'
   ],
   lighthouseCategories: ['accessibility', 'best-practices', 'seo', 'pwa']
 };
