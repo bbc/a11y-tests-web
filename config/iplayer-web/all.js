@@ -29,7 +29,6 @@ module.exports = {
     '/bbcfour/collections'
   ],
   signedInPaths: [
-    ...features.signedInPaths,
     ...homepage.signedInPaths,
     ...myprogrammes.signedInPaths,
     '/iplayer/watching',
