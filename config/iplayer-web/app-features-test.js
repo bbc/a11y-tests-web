@@ -8,11 +8,7 @@ module.exports = {
   paths: [
     '/iplayer/features/accessibility',
     '/iplayer/features/downloads',
-    '/iplayer/features/my-programmes',
-    '/iplayer/features/sign-in',
-    '/iplayer/features/30-days'
-  ],
-  signedInPaths: [
-    '/iplayer/features/sign-in'
+    '/iplayer/features/30-days',
+    '/iplayer/guidance'
   ]
 };
