@@ -16,6 +16,7 @@ module.exports = {
     '/tv/bbcnews',
     '/tv/bbcparliament',
     '/tv/bbcalba',
-    '/tv/s4c'
+    '/tv/s4c',
+    '/tv/bbcscotland'
   ]
 };
