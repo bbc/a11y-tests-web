@@ -37,5 +37,8 @@
   },
   "eslintConfig": {
     "extends": "iplayer-es6"
+  },
+  "nyc": {
+    "include": ["lib/*"]
   }
 }
