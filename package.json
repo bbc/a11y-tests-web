@@ -1,6 +1,6 @@
 {
   "name": "@bbc/a11y-tests-web",
-  "version": "5.2.0",
+  "version": "5.2.1",
   "description": "Runs automated accessibility tests on a set of pages",
   "main": "index.js",
   "scripts": {
@@ -39,6 +39,8 @@
     "extends": "iplayer-es6"
   },
   "nyc": {
-    "include": ["lib/*"]
+    "include": [
+      "lib/*"
+    ]
   }
 }
