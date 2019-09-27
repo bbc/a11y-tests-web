@@ -3,6 +3,9 @@
   "version": "5.6.0",
   "description": "Runs automated accessibility tests on a set of pages",
   "main": "index.js",
+  "bin": {
+    "a11y-tests-web": "./cli.js"
+  },
   "scripts": {
     "build:bbc-a11y": "node buildBbcA11y.js",
     "clean": "node cleanBbcA11y.js",
@@ -24,7 +27,8 @@
     "chrome-launcher": "^0.8.1",
     "chrome-remote-interface": "^0.25.4",
     "junit-report-builder": "^1.3.2",
-    "lighthouse": "^2.7.0"
+    "lighthouse": "^2.7.0",
+    "yargs": "^14.0.0"
   },
   "devDependencies": {
     "eslint": "^4.11.0",
