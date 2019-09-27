@@ -1,14 +1,10 @@
 'use strict';
 
-const { options, baseUrl } = require('./common');
+const homepageSignedIn = require('./app-homepage-test-signed-in');
 
 module.exports = {
-  options,
-  baseUrl,
+  ...homepageSignedIn,
   paths: [
-    '/iplayer'
-  ],
-  signedInPaths: [
     '/iplayer'
   ]
 };
