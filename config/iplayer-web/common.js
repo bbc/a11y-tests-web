@@ -10,7 +10,8 @@ module.exports = {
       'orb',
       'bbccookies-prompt',
       'smphtml5iframebbcMediaPlayer',
-      'edr_l_first'
+      'edr_l_first',
+      'edr_lwrap_first'
     ],
     skip: [
       'Text equivalents: Visual formatting: Use tables for data',
