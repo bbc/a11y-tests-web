@@ -11,7 +11,8 @@ module.exports = {
       'bbcprivacy-prompt',
       'id4-cta-',
       'msi-modal',
-      'p_audioui_'
+      'p_audioui_',
+      'Non-focusable element with tabindex=0: //div' // no way around having divs with role button for layout reasons
     ],
     skip: []
   },
