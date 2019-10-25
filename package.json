@@ -4,6 +4,7 @@
   "description": "Runs automated accessibility tests on a set of pages",
   "main": "index.js",
   "scripts": {
+    "preinstall": "npx npm-force-resolutions",
     "build:bbc-a11y": "node buildBbcA11y.js",
     "clean": "node cleanBbcA11y.js",
     "start:bbc-a11y": "npm run build:bbc-a11y && bbc-a11y --interactive && npm run clean",
@@ -24,7 +25,8 @@
     "chrome-launcher": "^0.8.1",
     "chrome-remote-interface": "^0.25.4",
     "junit-report-builder": "^1.3.2",
-    "lighthouse": "^2.7.0"
+    "lighthouse": "^2.7.0",
+    "npm-force-resolutions": "0.0.3"
   },
   "devDependencies": {
     "eslint": "^4.11.0",
@@ -42,5 +44,8 @@
     "include": [
       "lib/*"
     ]
+  },
+  "resolutions": {
+    "handlebars": "4.4.5"
   }
 }
