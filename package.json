@@ -48,6 +48,7 @@
   "resolutions": {
     "handlebars": "4.4.5",
     "growl": "1.10.2",
-    "lodash": "4.17.12"
+    "lodash": "4.17.12",
+    "braces": "2.3.1"
   }
 }
