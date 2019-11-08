@@ -21,8 +21,7 @@ For lighthouse
 A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://some.url A11Y_CONFIG=sounds-web/all npm run start:lighthouse:headless
 ```
 
-*We have also added a way to execute against particular page, the below example will run against Listen Page:
-
+We have also added a way to execute against particular page, the below example will run against Listen Page:
 
 For bbc-a11y
 ```
