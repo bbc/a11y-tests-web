@@ -18,7 +18,7 @@ A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://some.
 
 For lighthouse
 ```
-A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://some.url A11Y_CONFIG=sounds-web/all npm run start:lighthouse:headless
+A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://some.url A11Y_CONFIG=sounds-web/all npm run start:lighthouse:junit-headless
 ```
 
 We have also added a way to execute against particular page, the below example will run against Listen Page:
@@ -30,5 +30,5 @@ A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://local
 
 For devs to run lighthouse on localhost :
 ```
-A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://localhost.bbc.co.uk A11Y_CONFIG=sounds-web/listen_page npm run start:lighthouse:headless
+A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://localhost.bbc.co.uk A11Y_CONFIG=sounds-web/listen_page npm run start:lighthouse:junit-headless
 ```

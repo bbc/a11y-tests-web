@@ -18,7 +18,7 @@ A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_IPLAYER_WEB_BASE_URL=https://some
 
 For lighthouse
 ```
-A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_IPLAYER_WEB_BASE_URL=https://some.url A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:headless
+A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_IPLAYER_WEB_BASE_URL=https://some.url A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit-headless
 ```
 
 We have also added a way to execute against particular page, the below example will run against iPlayer homepage:
@@ -30,5 +30,5 @@ A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_IPLAYER_WEB_BASE_URL=https://sand
 
 For devs to run lighthouse on sandbox :
 ```
-A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_IPLAYER_WEB_BASE_URL=https://sandbox.bbc.co.uk A11Y_CONFIG=iplayer-web/app-homepage-test npm run start:lighthouse:headless
+A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_IPLAYER_WEB_BASE_URL=https://sandbox.bbc.co.uk A11Y_CONFIG=iplayer-web/app-homepage-test npm run start:lighthouse:junit-headless
 ```
