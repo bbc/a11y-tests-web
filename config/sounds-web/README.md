@@ -23,12 +23,12 @@ A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://some.
 
 We have also added a way to execute against particular page, the below example will run against Listen Page:
 
-For bbc-a11y
+For devs to run bbc-a11y on localhost :
 ```
-A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://www.bbc.co.uk A11Y_CONFIG=sounds-web/listen_page npm run start:bbc-a11y:headless
+A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://localhost.bbc.co.uk A11Y_CONFIG=sounds-web/listen_page npm run start:bbc-a11y:headless
 ```
 
-For lighthouse
+For devs to run lighthouse on localhost :
 ```
-A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://www.bbc.co.uk A11Y_CONFIG=sounds-web/listen_page npm run start:lighthouse:headless
+A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://localhost.bbc.co.uk A11Y_CONFIG=sounds-web/listen_page npm run start:lighthouse:headless
 ```
