@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 const { spawn } = require('child_process');
+const path = require('path');
 const yargs = require('yargs');
 const { clean: cleanBbcA11y, build: buildBbcA11y } = require('./lib/bbcA11y');
 const { run: runLighthouse } = require('./lib/lighthouse');
@@ -13,7 +14,7 @@ yargs
   .alias('h', 'help')
   .alias('m', 'mode')
   .describe('m', 'The mode to run the specified tool in')
-  .choices('m', ['headless', 'junit', 'junit-headless', 'ci'])
+  .choices('m', ['interactive', 'headless', 'junit', 'junit-headless', 'ci'])
   .demandOption('m', 'You must specify a mode to run the tool in, e.g. junit-headless')
   .argv;
 
@@ -60,7 +61,8 @@ function runBbcA11yOnHost(argv) {
   return new Promise((resolve) => {
     const { mode } = argv;
     const bbcA11yArgs = getBbcA11yArgs(mode);
-    const bbcA11y = spawn('bbc-a11y', [...bbcA11yArgs, ...argv._.slice(1)]);
+    const configFile = path.resolve(`${__dirname}/a11y.js`);
+    const bbcA11y = spawn('bbc-a11y', ['--config', configFile, ...bbcA11yArgs, ...argv._.slice(1)]);
     bbcA11y.stdout.pipe(process.stdout);
     bbcA11y.stderr.pipe(process.stderr);
 
