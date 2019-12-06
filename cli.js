@@ -7,7 +7,7 @@ const { run: runLighthouse } = require('./lib/lighthouse');
 const logger = require('./lib/colourfulLog');
 
 yargs
-  .usage('Usage: $0 <tool> [options] -- [tool options]')
+  .usage('Usage: A11Y_CONFIG=<config-name> $0 <tool> [options] -- [tool options]')
   .command('bbc-a11y', 'Runs bbc-a11y', runBbcA11yCli)
   .command('lighthouse', 'Runs Google Lighthouse', runLighthouseCli)
   .demandCommand()
