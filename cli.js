@@ -7,6 +7,7 @@ const argv = yargs
   .usage('Usage: $0 <tool> [options] -- [tool options]')
   .command('bbc-a11y', 'Runs bbc-a11y', runBbcA11y)
   .command('lighthouse', 'Runs Google Lighthouse', runLighthouse)
+  .demandCommand()
   .alias('h', 'help')
   .alias('m', 'mode')
   .describe('m', 'The mode to run the specified tool in')
