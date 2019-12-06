@@ -52,12 +52,21 @@ function runBbcA11yOnHost(argv) {
     bbcA11y.stdout.pipe(process.stdout);
     bbcA11y.stderr.pipe(process.stderr);
 
-    bbcA11y.on('close', exitCode => {
+    bbcA11y.on('close', (exitCode) => {
       resolve(exitCode);
     });
   });
 }
 
-function runBbcA11yInCiMode() {
-  //TODO
+function runBbcA11yInCiMode(argv) {
+  const dockerArgs = ['run', '--rm', '--tty', '--volume', `${__dirname}:/ws`, 'bbca11y/bbc-a11y-docker', '--config', '/ws/a11y.js', '--reporter', '/ws/lib/bbcA11YJUnitReporter.js'];
+  return new Promise((resolve) => {
+    const bbcA11yDocker = spawn('docker', [...dockerArgs, ...argv._.slice(1)]);
+    bbcA11yDocker.stdout.pipe(process.stdout);
+    bbcA11yDocker.stderr.pipe(process.stderr);
+
+    bbcA11yDocker.on('close', () => {
+      resolve(0);
+    });
+  });
 }

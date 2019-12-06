@@ -1,6 +1,7 @@
 'use strict';
 
 const fs = require('fs');
+const path = require('path');
 const minify = require('harp-minify');
 const sandbox = require('sinon').sandbox.create();
 
@@ -121,7 +122,7 @@ describe('bbcA11y', () => {
 
         sandbox.assert.calledWith(
           fs.writeFileSync,
-          'a11y.js',
+          path.resolve(`${__dirname}/../../a11y.js`),
           sandbox.match(matcher)
         );
       });
@@ -144,7 +145,7 @@ describe('bbcA11y', () => {
 
         sandbox.assert.calledWith(
           fs.writeFileSync,
-          'a11y.js',
+          path.resolve(`${__dirname}/../../a11y.js`),
           sandbox.match(matcher)
         );
       });
@@ -174,7 +175,7 @@ describe('bbcA11y', () => {
 
         sandbox.assert.calledWith(
           fs.writeFileSync,
-          'a11y.js',
+          path.resolve(`${__dirname}/../../a11y.js`),
           sandbox.match(matcher)
         );
       });
@@ -197,7 +198,7 @@ describe('bbcA11y', () => {
 
         sandbox.assert.calledWith(
           fs.writeFileSync,
-          'a11y.js',
+          path.resolve(`${__dirname}/../../a11y.js`),
           sandbox.match(matcher)
         );
       });
@@ -253,7 +254,7 @@ describe('bbcA11y', () => {
 
         sandbox.assert.calledWith(
           fs.writeFileSync,
-          'a11y.js',
+          path.resolve(`${__dirname}/../../a11y.js`),
           sandbox.match(matcher)
         );
       });
@@ -309,7 +310,7 @@ describe('bbcA11y', () => {
 
         sandbox.assert.calledWith(
           fs.writeFileSync,
-          'a11y.js',
+          path.resolve(`${__dirname}/../../a11y.js`),
           sandbox.match(matcher)
         );
       });
@@ -320,7 +321,7 @@ describe('bbcA11y', () => {
     it('unlinks the right file', () => {
       bbcA11y.clean();
 
-      sandbox.assert.calledWith(fs.unlinkSync, 'a11y.js');
+      sandbox.assert.calledWith(fs.unlinkSync, path.resolve(`${__dirname}/../../a11y.js`));
     });
   });
 });
