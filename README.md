@@ -9,13 +9,25 @@ Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) and [Google Lighthouse](https:/
 - libgconf-2-4
 - Docker (if using the `ci` option) - NB The docker image is not always necessary to use bbc-a11y for continuous integration. For example, in TravisCI one option available is to prepend the run script with xvfb-run - [relevant TravisCI documentation](https://docs.travis-ci.com/user/gui-and-headless-browsers/#Using-xvfb-to-Run-Tests-That-Require-a-GUI). Furthermore, an alternative to using the docker image in Jenkins might be to use the [xvfb plugin](https://wiki.jenkins.io/display/JENKINS/Xvfb+Plugin) - though this is untested.
 
-## Installation of dependencies
+## Running anywhere from the command-line
+This package can be run anywhere from the command-line, making it easy to integrate with your existing projects. Here's how:
+
+1. Install the package globally: `npm install @bbc/a11y-tests-web --global`
+2. Run the command anywhere from your command-line, e.g. `A11Y_CONFIG=iplayer-web/all a11y-tests-web lighthouse -m junit-headless`
+
+You could also make it part of your application's scripts. Here's how:
+1. Add the package to your application's dev dependencies: `npm install @bbc/a11y-tests-web --save-dev`
+2. Add a line to your application's scripts e.g. `"test:a11y": "A11Y_CONFIG=iplayer-web/app-playback-test a11y-tests-web bbc-a11y -m interactive"`
+
+You can find out more about using the CLI option by running `a11y-tests-web --help`.
+
+## Usage as an independent package
+
+### Installation of dependencies
 
 ```
 npm install
 ```
-
-## Usages
 
 ### Run bbc-a11y using a config, e.g. iplayer-web/all
 
