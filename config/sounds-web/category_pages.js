@@ -8,11 +8,13 @@ module.exports = {
   paths: [
     '/sounds/brand/b006tnxf',
     '/sounds/categories',
-    '/sounds/category/comedy?sort=popular'
+    '/sounds/category/music-rockandindie',
+    '/sounds/category/comedy'
   ],
   signedInPaths: [
     '/sounds/brand/b006tnxf',
     '/sounds/categories',
-    '/sounds/category/comedy?sort=popular'
+    '/sounds/category/music-rockandindie',
+    '/sounds/category/comedy'
   ]
 };
