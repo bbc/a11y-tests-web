@@ -6,9 +6,13 @@ module.exports = {
   options,
   baseUrl,
   paths: [
-    '/iplayer/recommendations'
+    '/iplayer/added',
+    '/iplayer/recommendations',
+    '/iplayer/watching'
   ],
   signedInPaths: [
-    '/iplayer/recommendations'
+    '/iplayer/added',
+    '/iplayer/recommendations',
+    '/iplayer/watching'
   ]
 };
