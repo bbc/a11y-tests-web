@@ -1,6 +1,6 @@
 'use strict';
 
-const baseUrl = process.env.A11Y_IPLAYER_WEB_BASE_URL || 'https://test.bbc.co.uk';
+const baseUrl = process.env.A11Y_IPLAYER_WEB_BASE_URL || 'https://sandbox.bbc.co.uk';
 
 // Skipped tests are those for which we have tickets prioritised in the backlog to fix
 
