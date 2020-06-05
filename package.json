@@ -35,7 +35,7 @@
     "yargs": "^14.0.0"
   },
   "devDependencies": {
-    "eslint": "^4.11.0",
+    "eslint": "^7.1.0",
     "eslint-config-iplayer": "^7.0.0",
     "eslint-plugin-mocha": "^4.9.0",
     "harp-minify": "^0.4.0",
