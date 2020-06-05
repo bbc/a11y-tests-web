@@ -1,4 +1,6 @@
 #!/usr/bin/env node
+'use strict';
+
 const { spawn } = require('child_process');
 const path = require('path');
 const yargs = require('yargs');
@@ -41,7 +43,7 @@ function runLighthouseCli({ argv }) {
     return runLighthouse();
   }
 
-  logger.error(`Unknown mode. Lighthouse is only supported in the following modes: ${validModes.join(', ')}`)
+  logger.error(`Unknown mode. Lighthouse is only supported in the following modes: ${validModes.join(', ')}`);
 }
 
 function getBbcA11yArgs(mode) {
@@ -51,9 +53,9 @@ function getBbcA11yArgs(mode) {
     case 'junit':
       return ['--interactive', '--reporter', './lib/bbcA11YJUnitReporter.js'];
     case 'junit-headless':
-        ['--reporter', './lib/bbcA11YJUnitReporter.js']
+      return ['--reporter', './lib/bbcA11YJUnitReporter.js'];
     default:
-      return ['--interactive']
+      return ['--interactive'];
   }
 }
 

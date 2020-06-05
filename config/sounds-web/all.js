@@ -1,25 +1,27 @@
+'use strict';
+
 const baseUrl = process.env.A11Y_SOUNDS_WEB_BASE_URL || 'https://www.bbc.co.uk';
 
 const { options } = require('./common');
 
-const listen_page = require('./listen_page');
+const listenPage = require('./listen_page');
 const playspace = require('./playspace');
-const my_sounds = require('./my_sounds');
+const mySounds = require('./my_sounds');
 const category = require('./category_pages');
 
 module.exports = {
   options,
   baseUrl,
   paths: [
-    ...listen_page.paths,
+    ...listenPage.paths,
     ...playspace.paths,
-    ...my_sounds.paths,
+    ...mySounds.paths,
     ...category.paths
   ],
   signedInPaths: [
-    ...listen_page.signedInPaths,
+    ...listenPage.signedInPaths,
     ...playspace.signedInPaths,
-    ...my_sounds.signedInPaths,
+    ...mySounds.signedInPaths,
     ...category.signedInPaths
   ]
 };
