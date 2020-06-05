@@ -1,10 +1,13 @@
 {
   "name": "@bbc/a11y-tests-web",
-  "version": "5.12.1",
+  "version": "6.0.0",
   "description": "Runs automated accessibility tests on a set of pages",
   "main": "index.js",
   "bin": {
     "a11y-tests-web": "./cli.js"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   },
   "scripts": {
     "build:bbc-a11y": "node buildBbcA11y.js",
@@ -36,8 +39,8 @@
     "eslint-config-iplayer": "^7.0.0",
     "eslint-plugin-mocha": "^4.9.0",
     "harp-minify": "^0.4.0",
-    "mocha": "^3.5.0",
-    "nyc": "^11.4.1",
+    "mocha": "^7.2.0",
+    "nyc": "^15.1.0",
     "sinon": "^2.4.0"
   },
   "eslintConfig": {
