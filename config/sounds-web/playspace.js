@@ -9,10 +9,12 @@ module.exports = {
   baseUrl,
   paths: [
     '/sounds/play/series:b006qftk',
-    '/sounds/play/live:bbc_radio_one'
+    '/sounds/play/live:bbc_radio_one',
+    '/sounds/play/p08jhp3y'
   ],
   signedInPaths: [
     '/sounds/play/series:b006qftk',
-    '/sounds/play/live:bbc_radio_one'
+    '/sounds/play/live:bbc_radio_one',
+    '/sounds/play/p08jhp3y'
   ]
 };
