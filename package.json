@@ -19,6 +19,8 @@
     "start:bbc-a11y:ci": "npm run build:bbc-a11y && bash -c \"docker run --rm --tty --volume $PWD:/ws bbca11y/bbc-a11y-docker --config /ws/a11y.js --reporter /ws/lib/bbcA11YJUnitReporter.js; exit 0;\" && npm run clean",
     "start:lighthouse:junit": "node runLighthouse.js",
     "start:lighthouse:junit-headless": "A11Y_HEADLESS=true node runLighthouse.js",
+    "start:lighthouse:junit-headless-pretty": "A11Y_HEADLESS=true node runLighthouse.js && yarn lighthouse-to-console",
+    "lighthouse-to-console": "xunit-viewer -r lighthouse-report.xml -c -o false | cat",
     "lint": "npm run clean && eslint .",
     "test": "mocha 'test/**/*.js'",
     "posttest": "npm run lint",
@@ -32,6 +34,7 @@
     "chrome-remote-interface": "^0.25.4",
     "junit-report-builder": "^1.3.2",
     "lighthouse": "^2.7.0",
+    "xunit-viewer": "^6.3.9",
     "yargs": "^14.0.0"
   },
   "devDependencies": {
