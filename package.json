@@ -20,7 +20,7 @@
     "start:lighthouse:junit": "node runLighthouse.js",
     "start:lighthouse:junit-headless": "A11Y_HEADLESS=true node runLighthouse.js",
     "start:lighthouse:junit-headless-pretty": "A11Y_HEADLESS=true node runLighthouse.js && yarn lighthouse-to-console",
-    "lighthouse-to-console": "xunit-viewer -r lighthouse-report.xml -c -o false | cat",
+    "lighthouse-to-console": "xunit-viewer -r lighthouse-report.xml -c -o false",
     "lint": "npm run clean && eslint .",
     "test": "mocha 'test/**/*.js'",
     "posttest": "npm run lint",
