@@ -93,6 +93,14 @@ To run Google Lighthouse in headless mode and generate a JUnit report:
 A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit-headless
 ```
 
+### Run Google Lighthouse in headless mode and print results to console
+
+To run Google Lighthouse in headless mode and generate human-readable output to console:
+
+```
+A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit-headless-pretty
+```
+
 ## Running on Jenkins
 
 If you'd like to run this on your Jenkins server, ensure your Jenkins meets the requirements above and has a [JUnit plugin](https://plugins.jenkins.io/junit) installed and then:
