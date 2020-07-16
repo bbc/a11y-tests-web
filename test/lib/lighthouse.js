@@ -342,10 +342,12 @@ describe('lighthouse', () => {
       });
     });
 
-    describe('Paths and signed in paths and baseUrl but no username and password', () => {
+    describe.only('Paths and signed in paths and baseUrl but no username and password', () => {
       beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
       });
+
+      // BORK
 
       it('logs what domain and paths it will run against', () => {
         return lighthouseRunner.run().then(() => {
@@ -354,6 +356,8 @@ describe('lighthouse', () => {
         });
       });
 
+      // BORK
+
       it('launches lighthouse for the signed out paths only', () => {
         return lighthouseRunner.run().then(() => {
           sandbox.assert.calledTwice(external.lighthouse);
@@ -361,6 +365,8 @@ describe('lighthouse', () => {
           sandbox.assert.calledWith(external.lighthouse, 'http://base.url/path/2');
         });
       });
+
+      // BORK
 
       it('logs a warning about skipping signed in paths', () => {
         return lighthouseRunner.run().then(() => {
