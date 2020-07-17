@@ -459,8 +459,8 @@ describe('lighthouse', () => {
     describe('Pretty-print lighthouse option', () => {
       beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-and-baseurl';
-        process.env.A11Y_PRETTY = true;
-        sandbox.spy(xunitViewer, 'toConsole');
+        process.env.A11Y_PRETTY = 'true';
+        sandbox.stub(xunitViewer, 'toConsole');
       });
 
       it('calls xunitViewer if passed A11Y_PRETTY', () => {
