@@ -34,11 +34,14 @@ async function runBbcA11yCli({ argv }) {
 
 function runLighthouseCli({ argv }) {
   const { mode } = argv;
-  const validModes = ['junit', 'junit-headless'];
+  const validModes = ['junit', 'junit-headless', 'headless'];
 
   if (validModes.includes(mode)) {
-    if (mode === 'junit-headless') {
+    if (mode === 'junit-headless' || mode === 'headless') {
       process.env.A11Y_HEADLESS = true;
+    }
+    if (mode === 'headless') {
+      process.env.A11Y_PRETTY = 'true';
     }
     return runLighthouse();
   }

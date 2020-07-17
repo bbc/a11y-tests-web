@@ -10,6 +10,7 @@ const colourfulLog = require('../../lib/colourfulLog');
 const external = require('../../lib/external');
 const fakeResults = require('../fixtures/lighthouseReport');
 const lighthouseRunner = require('../../lib/lighthouse');
+const xunitViewer = require('../../lib/xunitViewer');
 
 function getMinifiedMatcher(code) {
   return (value) => {
@@ -450,6 +451,22 @@ describe('lighthouse', () => {
             reportBuilder.testSuite().testCase().failure,
             sandbox.match('Error on http://base.url/path/2\n' +
             'Image alt help text 2\n\n')
+          );
+        });
+      });
+    });
+
+    describe('Pretty-print lighthouse option', () => {
+      beforeEach(() => {
+        process.env.A11Y_CONFIG = 'test/paths-and-baseurl';
+        process.env.A11Y_PRETTY = 'true';
+        sandbox.stub(xunitViewer, 'toConsole');
+      });
+
+      it('calls xunitViewer if passed A11Y_PRETTY', () => {
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.calledOnce(
+            xunitViewer.toConsole
           );
         });
       });
