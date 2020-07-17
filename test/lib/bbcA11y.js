@@ -182,12 +182,12 @@ describe('bbcA11y', () => {
 
     });
 
-    describe.only('Paths and signed in paths and baseUrl but no options and no username and password', () => {
+    describe('Paths and signed in paths and baseUrl but no options and no username and password', () => {
       beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
+        delete process.env.A11Y_USERNAME;
+        delete process.env.A11Y_PASSWORD;
       });
-
-      // BORK
 
       it('outputs the basic config for the paths but not signed in paths', () => {
         const expectedOutput = `
@@ -195,9 +195,7 @@ describe('bbcA11y', () => {
           page( "http://base.url/path/2", { } )
         `;
         const matcher = getMinifiedMatcher(expectedOutput);
-
         bbcA11y.build();
-
         sandbox.assert.calledWith(
           fs.writeFileSync,
           path.resolve(`${__dirname}/../../a11y.js`),
@@ -205,16 +203,12 @@ describe('bbcA11y', () => {
         );
       });
 
-      // BORK
-
       it('logs what domain and paths it will run against', () => {
         bbcA11y.build();
 
         sandbox.assert.calledWith(colourfulLog.log, 'Tests will run against: base.url /path/1 /path/2');
         sandbox.assert.neverCalledWith(colourfulLog.log, sandbox.match('Tests will run signed in'));
       });
-
-      // BORK
 
       it('logs a warning', () => {
         bbcA11y.build();
