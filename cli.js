@@ -41,7 +41,7 @@ function runLighthouseCli({ argv }) {
       process.env.A11Y_HEADLESS = true;
     }
     if (mode === 'headless') {
-      process.env.A11Y_PRETTY = true;
+      process.env.A11Y_PRETTY = 'true';
     }
     return runLighthouse();
   }
