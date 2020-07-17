@@ -345,6 +345,8 @@ describe('lighthouse', () => {
     describe('Paths and signed in paths and baseUrl but no username and password', () => {
       beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
+        delete process.env.A11Y_USERNAME;
+        delete process.env.A11Y_PASSWORD;
       });
 
       it('logs what domain and paths it will run against', () => {

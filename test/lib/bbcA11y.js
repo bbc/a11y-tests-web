@@ -185,6 +185,8 @@ describe('bbcA11y', () => {
     describe('Paths and signed in paths and baseUrl but no options and no username and password', () => {
       beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
+        delete process.env.A11Y_USERNAME;
+        delete process.env.A11Y_PASSWORD;
       });
 
       it('outputs the basic config for the paths but not signed in paths', () => {
