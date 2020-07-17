@@ -195,7 +195,9 @@ describe('bbcA11y', () => {
           page( "http://base.url/path/2", { } )
         `;
         const matcher = getMinifiedMatcher(expectedOutput);
+
         bbcA11y.build();
+
         sandbox.assert.calledWith(
           fs.writeFileSync,
           path.resolve(`${__dirname}/../../a11y.js`),
