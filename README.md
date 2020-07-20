@@ -98,7 +98,7 @@ A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit-headless
 To run Google Lighthouse in headless mode and generate human-readable output to console:
 
 ```
-A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:junit-headless-pretty
+A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:headless
 ```
 
 ## Running on Jenkins
