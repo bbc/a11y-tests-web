@@ -2,7 +2,7 @@
 
 const chromeLauncher = require('chrome-launcher');
 const fs = require('fs');
-const minify = require('harp-minify');
+const minify = require('minify');
 const reportBuilder = require('junit-report-builder');
 const sandbox = require('sinon').sandbox.create();
 

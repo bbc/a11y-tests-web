@@ -2,7 +2,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const minify = require('harp-minify');
+const minify = require('minify');
 const sandbox = require('sinon').sandbox.create();
 
 const bbcA11y = require('../../lib/bbcA11y');
