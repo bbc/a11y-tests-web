@@ -21,7 +21,7 @@ function getMinifiedMatcher(code) {
 }
 
 const EXPECTED_LIGHTHOUSE_FLAGS = {
-  logLevel: 'silent',
+  logLevel: 'verbose',
   output: 'json',
   port: 1234
 };
