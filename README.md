@@ -101,6 +101,14 @@ To run Google Lighthouse in headless mode and generate human-readable output to 
 A11Y_CONFIG=iplayer-web/all npm run start:lighthouse:headless
 ```
 
+### Run Google Lighthouse with verbose logging enabled
+
+To run Google Lighthouse in headless mode and enable verbose logging to console for Lighthouse:
+
+```
+A11Y_CONFIG=iplayer-web/all A11Y_LOGGING_LEVEL=verbose npm run start:lighthouse:headless
+```
+
 ## Running on Jenkins
 
 If you'd like to run this on your Jenkins server, ensure your Jenkins meets the requirements above and has a [JUnit plugin](https://plugins.jenkins.io/junit) installed and then:
