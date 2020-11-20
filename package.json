@@ -28,18 +28,18 @@
   "author": "Andy Smith",
   "license": "Apache-2.0",
   "dependencies": {
-    "bbc-a11y": "^2.4.1",
-    "chrome-launcher": "^0.8.1",
-    "chrome-remote-interface": "^0.25.4",
-    "junit-report-builder": "^1.3.2",
+    "bbc-a11y": "^2.4.2",
+    "chrome-launcher": "^0.13.2",
+    "chrome-remote-interface": "^0.25.7",
+    "junit-report-builder": "^1.3.3",
     "lighthouse": "^2.9.4",
-    "xunit-viewer": "^6.3.9",
-    "yargs": "^14.0.0"
+    "xunit-viewer": "^6.3.12",
+    "yargs": "^14.2.3"
   },
   "devDependencies": {
-    "eslint": "^7.1.0",
+    "eslint": "^7.13.0",
     "eslint-config-iplayer": "^7.0.0",
-    "eslint-plugin-mocha": "^4.9.0",
+    "eslint-plugin-mocha": "^4.12.1",
     "harp-minify": "^0.4.0",
     "mocha": "^7.2.0",
     "nyc": "^15.1.0",
