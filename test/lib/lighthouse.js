@@ -166,7 +166,12 @@ describe('lighthouse', () => {
 
       it('launches chrome once per path with the right options if A11Y_HEADLESS not set', () => {
         return lighthouseRunner.run().then(() => {
-          sandbox.assert.calledWith(chromeLauncher.launch, { chromeFlags: ['--disable-gpu', '--no-sandbox'] });
+          sandbox.assert.calledWith(chromeLauncher.launch, {
+            chromeFlags: ['--disable-gpu', '--no-sandbox'],
+            connectionPollInterval: 500,
+            maxConnectionRetries: 100,
+            logLevel: 'error'
+          });
           sandbox.assert.calledTwice(chromeLauncher.launch);
         });
       });
@@ -175,7 +180,12 @@ describe('lighthouse', () => {
         process.env.A11Y_HEADLESS = 'true';
 
         return lighthouseRunner.run().then(() => {
-          sandbox.assert.calledWith(chromeLauncher.launch, { chromeFlags: ['--headless', '--disable-gpu', '--no-sandbox'] });
+          sandbox.assert.calledWith(chromeLauncher.launch, {
+            chromeFlags: ['--headless', '--disable-gpu', '--no-sandbox'],
+            connectionPollInterval: 500,
+            maxConnectionRetries: 100,
+            logLevel: 'error'
+          });
           sandbox.assert.calledTwice(chromeLauncher.launch);
         });
       });
