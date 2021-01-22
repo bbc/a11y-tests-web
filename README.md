@@ -1,6 +1,6 @@
 # a11y-tests-web
 
-[![Build Status](https://travis-ci.org/bbc/a11y-tests-web.svg)](https://travis-ci.org/bbc/a11y-tests-web)
+![Build Status](https://github.com/bbc/a11y-tests-web/workflows/Node.js%20CI/badge.svg)
 
 Uses [bbc-a11y](https://github.com/bbc/bbc-a11y) and [Google Lighthouse](https://developers.google.com/web/tools/lighthouse/) to run a suite of automated tests to test accessibility across a set of webpages, defined in a config file.
 
