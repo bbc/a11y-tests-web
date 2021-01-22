@@ -57,7 +57,7 @@ describe('bbcA11y', () => {
       it('logs the error message about no config', () => {
         bbcA11y.build();
 
-        sandbox.assert.calledWith(colourfulLog.error, 'No config selected. Use the A11Y_CONFIG environment variable to set one.');
+        sandbox.assert.neverCalledWith(colourfulLog.error, 'No config selected. Use the A11Y_CONFIG environment variable to set one.');
       });
 
       it('exits with status code 1', () => {
