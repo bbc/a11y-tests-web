@@ -5,6 +5,7 @@ const bundlesSignedIn = require('./app-bundles-test-signed-in');
 module.exports = {
   ...bundlesSignedIn,
   paths: [
-    '/iplayer'
+    '/iplayer',
+    '/iplayer/categories/arts/featured'
   ]
 };
