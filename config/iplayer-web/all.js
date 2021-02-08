@@ -2,7 +2,7 @@
 
 const features = require('./app-features-test');
 const highlights = require('./app-highlights-test');
-const homepage = require('./app-homepage-test');
+const bundles = require('./app-bundles-test');
 const lists = require('./app-lists-test');
 const myprogrammes = require('./app-myprogrammes-test');
 const playback = require('./app-playback-test');
@@ -18,7 +18,7 @@ module.exports = {
   paths: [
     ...features.paths,
     ...highlights.paths,
-    ...homepage.paths,
+    ...bundles.paths,
     ...lists.paths,
     ...myprogrammes.paths,
     ...playback.paths,
@@ -29,7 +29,7 @@ module.exports = {
     '/bbcfour/collections'
   ],
   signedInPaths: [
-    ...homepage.signedInPaths,
+    ...bundles.signedInPaths,
     ...myprogrammes.signedInPaths,
     '/iplayer/watching',
     '/iplayer/added'

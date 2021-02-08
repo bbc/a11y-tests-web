@@ -1,9 +1,9 @@
 'use strict';
 
-const homepageSignedIn = require('./app-homepage-test-signed-in');
+const bundlesSignedIn = require('./app-bundles-test-signed-in');
 
 module.exports = {
-  ...homepageSignedIn,
+  ...bundlesSignedIn,
   paths: [
     '/iplayer'
   ]
