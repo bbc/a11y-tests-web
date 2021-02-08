@@ -1,6 +1,6 @@
 {
   "name": "@bbc/a11y-tests-web",
-  "version": "6.4.1",
+  "version": "6.5.0",
   "description": "Runs automated accessibility tests on a set of pages",
   "main": "index.js",
   "bin": {
