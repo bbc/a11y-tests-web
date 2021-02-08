@@ -17,6 +17,7 @@ module.exports = {
   options,
   baseUrl,
   signedInPaths: [
-    '/iplayer'
+    '/iplayer',
+    '/iplayer/categories/arts/featured'
   ]
 };

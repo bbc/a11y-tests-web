@@ -25,10 +25,10 @@ We have also added a way to execute against particular page, the below example w
 
 For devs to run bbc-a11y on sandbox :
 ```
-A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_IPLAYER_WEB_BASE_URL=https://sandbox.bbc.co.uk A11Y_CONFIG=iplayer-web/app-homepage-test npm run start:bbc-a11y:headless
+A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_IPLAYER_WEB_BASE_URL=https://sandbox.bbc.co.uk A11Y_CONFIG=iplayer-web/app-bundles-test npm run start:bbc-a11y:headless
 ```
 
 For devs to run lighthouse on sandbox :
 ```
-A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_IPLAYER_WEB_BASE_URL=https://sandbox.bbc.co.uk A11Y_CONFIG=iplayer-web/app-homepage-test npm run start:lighthouse:junit-headless
+A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_IPLAYER_WEB_BASE_URL=https://sandbox.bbc.co.uk A11Y_CONFIG=iplayer-web/app-bundles-test npm run start:lighthouse:junit-headless
 ```
