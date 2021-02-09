@@ -1,5 +1,7 @@
 # Contributing
 
+This repo is **public**, avoid including any internal company URLs in issues and PRs.
+
 ## Submitting changes
 
 If you'd like to add your own config for your team, or contribute to this repo in some other way...
