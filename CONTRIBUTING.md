@@ -1,6 +1,7 @@
-# a11y-tests-web
+# Contributing
 
-## Contributing
+## Submitting changes
+
 If you'd like to add your own config for your team, or contribute to this repo in some other way...
 * Create a fork
 * Create a branch
