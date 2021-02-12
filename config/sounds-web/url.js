@@ -5,7 +5,7 @@ const { options } = require('./common');
 module.exports = {
   options,
   baseUrl: process.env.A11Y_URL,
-  paths: []
+  paths: ['']
 };
 
 // can be used to test single url passed in:
