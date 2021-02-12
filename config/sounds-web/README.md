@@ -32,3 +32,10 @@ For devs to run lighthouse on localhost :
 ```
 A11Y_USERNAME=user A11Y_PASSWORD=password A11Y_SOUNDS_WEB_BASE_URL=https://localhost.bbc.co.uk A11Y_CONFIG=sounds-web/listen_page npm run start:lighthouse:junit-headless
 ```
+### Single Web page
+
+To test a single webpage (while also including the Sounds Web specific settings), run using the 'url' config, replacing the url with your own:
+```
+A11Y_URL='http://www.google.com' A11Y_CONFIG=sounds-web/url a11y-tests-web bbc-a11y -m headless
+```
+
