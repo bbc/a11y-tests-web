@@ -4,8 +4,8 @@ const { options } = require('./common');
 
 module.exports = {
   options,
-  baseUrl: process.env.URL,
-  paths: ['']
+  baseUrl: process.env.A11Y_SOUNDS_WEB_BASE_URL,
+  paths: [A11Y_SOUNDS_WEB_PATH]
 };
 
 // can be used to test single url passed in:
