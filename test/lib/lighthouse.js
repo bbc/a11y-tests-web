@@ -491,7 +491,7 @@ describe('lighthouse', () => {
         return lighthouseRunner.run().then(() => {
           assert(fakeInspectableTargetsScope.isDone(), 'Expected the inspectable targets to be requested');
           sandbox.assert.notCalled(external.CDP);
-          sandbox.assert.calledWith(colourfulLog.error, 'Failed to get inspectable target.\nError: Max number of attempts reached');
+          sandbox.assert.calledWith(colourfulLog.error, 'Failed to get inspectable target.\nError: Failed to find inspectable target, max attempts to connect reached');
 
         });
       });
