@@ -1,14 +1,17 @@
 'use strict';
 
+const assert = require('assert');
 const chromeLauncher = require('chrome-launcher');
 const fs = require('fs');
 const minify = require('harp-minify');
 const reportBuilder = require('junit-report-builder');
+const nock = require('nock');
 const sandbox = require('sinon').sandbox.create();
 
 const colourfulLog = require('../../lib/colourfulLog');
 const external = require('../../lib/external');
 const fakeResults = require('../fixtures/lighthouseReport');
+const inspectableTargetsFixture = require('../fixtures/inspectableTargets');
 const lighthouseRunner = require('../../lib/lighthouse');
 const xunitViewer = require('../../lib/xunitViewer');
 
@@ -46,6 +49,8 @@ const EXPECTED_LOGIN_SCRIPT = `
   document.getElementById('submit-button').click();
 `;
 
+nock.disableNetConnect();
+
 describe('lighthouse', () => {
 
   let originalEnv;
@@ -53,6 +58,7 @@ describe('lighthouse', () => {
   let chromeKill;
   let fakeReportBuilderTestSuite;
   let fakeCDP;
+  let fakeInspectableTargetsScope;
 
   beforeEach(() => {
     originalEnv = Object.assign({}, process.env);
@@ -95,12 +101,18 @@ describe('lighthouse', () => {
     };
     sandbox.stub(reportBuilder, 'testSuite').returns(fakeReportBuilderTestSuite);
     sandbox.stub(reportBuilder, 'build').returns('Built report');
+
+    fakeInspectableTargetsScope = nock('http://127.0.0.1:1234')
+      .get('/json/list')
+      .reply(200, inspectableTargetsFixture)
+      .persist();
   });
 
   afterEach(() => {
     process.env = originalEnv;
     process.exit = originalExit;
     sandbox.restore();
+    nock.cleanAll();
   });
 
   describe('run()', () => {
@@ -407,9 +419,29 @@ describe('lighthouse', () => {
       });
 
       it('sets up the chrome remote interface with the port that Chrome is running on', () => {
+        // Have to specify the interceptor like so because you can only pass in
+        // `Interceptor` into remove `removeInterceptor`. You can't pass in
+        // a scope.
+        nock.removeInterceptor({
+          protocol: 'http',
+          host: '127.0.0.1',
+          port: '1234',
+          path: '/json/list'
+        });
+
+        fakeInspectableTargetsScope = nock('http://127.0.0.1:1234')
+          .get('/json/list')
+          .times(2)
+          .reply(200, inspectableTargetsFixture);
+
         return lighthouseRunner.run().then(() => {
+          assert(fakeInspectableTargetsScope.isDone(), 'Expected the inspectable targets to be requested');
           sandbox.assert.calledWith(external.CDP, sandbox.match({ port: 1234 }));
         });
+      });
+
+      it.skip('does not connect to chrome remote interface until the target is inspectable', () => {
+        nock.removeInterceptor(fakeInspectableTargetsScope);
       });
 
       it('calls Page.enable and then navigates to the sign-in page', () => {
