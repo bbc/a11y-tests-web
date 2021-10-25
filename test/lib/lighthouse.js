@@ -447,30 +447,29 @@ describe('lighthouse', () => {
           port: '1234',
           path: '/json/list'
         });
+        const emptyResponse = [];
+        const numberOfSignedInPaths = 2;
 
         fakeInspectableTargetsScope = nock('http://127.0.0.1:1234')
-          // TODO: Explain why we need so many chained interceptors. Is there
-          // a simpler way? Only test 1 path instead of 2 at the same time?
           .get('/json/list')
-          .reply(200, [])
-          .get('/json/list')
-          .reply(200, [])
-          .get('/json/list')
-          .reply(200, [])
-          .get('/json/list')
-          .reply(200, inspectableTargetsFixture)
+          .times(numberOfSignedInPaths)
+          .reply(200, emptyResponse)
 
-          // Calling /path/4
+          // Retry...
           .get('/json/list')
+          .times(numberOfSignedInPaths)
           .reply(200, inspectableTargetsFixture);
 
         return lighthouseRunner.run().then(() => {
-          assert(fakeInspectableTargetsScope.isDone(), 'Expected the inspectable targets to be requested');
+          assert(fakeInspectableTargetsScope.isDone(), 'Expected the inspectable targets to be requested the correct number of times');
           sandbox.assert.calledWith(external.CDP, sandbox.match({ port: 1234 }));
         });
       });
 
       it('does not connect to chrome remote interface if max attempts is reached', () => {
+        const maxNumberOfAttempts = 50;
+        const numberOfSignedInPaths = 2;
+
         nock.removeInterceptor({
           protocol: 'http',
           host: '127.0.0.1',
@@ -479,14 +478,9 @@ describe('lighthouse', () => {
         });
 
         fakeInspectableTargetsScope = nock('http://127.0.0.1:1234')
-          // TODO: Explain why we need so many chained interceptors. Is there
-          // a simpler way? Only test 1 path instead of 2 at the same time?
           .get('/json/list')
-
-          // TODO: Explain why it's 104 times, or use persist.
-          // MAX_ATTEMPTS * 2 (and then + 2 for some reason).
-          .times(104)
-          .reply(200, [])
+          .times(maxNumberOfAttempts * numberOfSignedInPaths)
+          .reply(200, []);
 
         return lighthouseRunner.run().then(() => {
           assert(fakeInspectableTargetsScope.isDone(), 'Expected the inspectable targets to be requested');
