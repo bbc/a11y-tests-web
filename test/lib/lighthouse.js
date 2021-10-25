@@ -440,8 +440,32 @@ describe('lighthouse', () => {
         });
       });
 
-      it.skip('does not connect to chrome remote interface until the target is inspectable', () => {
-        nock.removeInterceptor(fakeInspectableTargetsScope);
+      it('does not connect to chrome remote interface until the target is inspectable', () => {
+        nock.removeInterceptor({
+          protocol: 'http',
+          host: '127.0.0.1',
+          port: '1234',
+          path: '/json/list'
+        });
+
+        fakeInspectableTargetsScope = nock('http://127.0.0.1:1234')
+          .get('/json/list')
+          .reply(200, [])
+          .get('/json/list')
+          .reply(200, [])
+          .get('/json/list')
+          .reply(200, [])
+          .get('/json/list')
+          .reply(200, inspectableTargetsFixture)
+
+          // Calling /path/4
+          .get('/json/list')
+          .reply(200, inspectableTargetsFixture);
+
+        return lighthouseRunner.run().then(() => {
+          assert(fakeInspectableTargetsScope.isDone(), 'Expected the inspectable targets to be requested');
+          sandbox.assert.calledWith(external.CDP, sandbox.match({ port: 1234 }));
+        });
       });
 
       it('calls Page.enable and then navigates to the sign-in page', () => {
