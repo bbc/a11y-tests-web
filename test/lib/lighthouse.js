@@ -419,9 +419,10 @@ describe('lighthouse', () => {
       });
 
       it('sets up the chrome remote interface with the port that Chrome is running on', () => {
-        // Have to specify the interceptor like so because you can only pass in
-        // `Interceptor` into remove `removeInterceptor`. You can't pass in
-        // a scope.
+        // Have to explicity specify the interceptor because you can only pass in an `Interceptor`
+        // into `removeInterceptor`. You can't pass in a scope. It is possible
+        // to pass in `fakeInspectableTargetsScope.interceptors[0]` but that relies
+        //  on internal API that could change.
         nock.removeInterceptor({
           protocol: 'http',
           host: '127.0.0.1',
