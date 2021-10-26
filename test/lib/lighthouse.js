@@ -395,10 +395,22 @@ describe('lighthouse', () => {
     });
 
     describe('Paths and signed in paths and baseUrl with a username and password', () => {
+      let originalTimeout;
+      let timeoutStub;
+
       beforeEach(() => {
         process.env.A11Y_CONFIG = 'test/paths-with-signed-in-and-baseurl';
         process.env.A11Y_USERNAME = 'my-username';
         process.env.A11Y_PASSWORD = 'my-password';
+
+        timeoutStub = sandbox.stub().callsFake((callback) => callback());
+
+        originalTimeout = global.setTimeout;
+        global.setTimeout = timeoutStub;
+      });
+
+      afterEach(() => {
+        global.setTimeout = originalTimeout;
       });
 
       it('logs what domain and paths it will run against', () => {
@@ -470,6 +482,7 @@ describe('lighthouse', () => {
       it('does not connect to chrome remote interface if max attempts is reached', () => {
         const maxNumberOfAttempts = 50;
         const numberOfSignedInPaths = 2;
+        const emptyResponse = [];
 
         nock.removeInterceptor({
           protocol: 'http',
@@ -481,13 +494,37 @@ describe('lighthouse', () => {
         fakeInspectableTargetsScope = nock('http://127.0.0.1:1234')
           .get('/json/list')
           .times(maxNumberOfAttempts * numberOfSignedInPaths)
-          .reply(200, []);
+          .reply(200, emptyResponse);
 
         return lighthouseRunner.run().then(() => {
           assert(fakeInspectableTargetsScope.isDone(), 'Expected the inspectable targets to be requested');
           sandbox.assert.notCalled(external.CDP);
           sandbox.assert.calledWith(colourfulLog.error, 'Failed to get inspectable target.\nError: Failed to find inspectable target, max attempts to connect reached');
+        });
+      });
 
+      it('waits 300ms between each attempt to connect to chrome remote interface', () => {
+        const expectedTimeoutValue = 300;
+
+        const maxNumberOfAttempts = 50;
+        const numberOfSignedInPaths = 2;
+        const emptyResponse = [];
+
+        nock.removeInterceptor({
+          protocol: 'http',
+          host: '127.0.0.1',
+          port: '1234',
+          path: '/json/list'
+        });
+
+        fakeInspectableTargetsScope = nock('http://127.0.0.1:1234')
+          .get('/json/list')
+          .times(maxNumberOfAttempts * numberOfSignedInPaths)
+          .reply(200, emptyResponse);
+
+        return lighthouseRunner.run().then(() => {
+          sandbox.assert.callCount(timeoutStub, maxNumberOfAttempts * numberOfSignedInPaths);
+          sandbox.assert.alwaysCalledWith(timeoutStub, sandbox.match.func, expectedTimeoutValue);
         });
       });
 
