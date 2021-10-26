@@ -1,0 +1,11 @@
+[
+  {
+    "description": "",
+    "devtoolsFrontendUrl": "/devtools/inspector.html?ws=127.0.0.1:1234/devtools/page/7B5B9E9C373EEDD92AD48AFD3BC85BFF",
+    "id": "7B5B9E9C373EEDD92AD48AFD3BC85BFF",
+    "title": "",
+    "type": "page",
+    "url": "about:blank",
+    "webSocketDebuggerUrl": "ws://127.0.0.1:1234/devtools/page/7B5B9E9C373EEDD92AD48AFD3BC85BFF"
+  }
+]

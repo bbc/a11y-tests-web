@@ -42,6 +42,7 @@
     "eslint-plugin-mocha": "^4.12.1",
     "harp-minify": "^0.4.0",
     "mocha": "^7.2.0",
+    "nock": "^13.1.4",
     "nyc": "^15.1.0",
     "sinon": "^2.4.0"
   },
