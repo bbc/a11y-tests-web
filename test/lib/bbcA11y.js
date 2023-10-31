@@ -21,6 +21,7 @@ const VISIT_OPTION_BODY = `
     frame.onload = function () {
       var loginPage = frame.contentDocument;
       loginPage.getElementById('user-identifier-input').value = 'my-username';
+      loginPage.getElementById('submit-button').click();
       loginPage.getElementById('password-input').value = 'my-password';
       loginPage.getElementById('submit-button').click();
       frame.onload = test
@@ -235,7 +236,7 @@ describe('bbcA11y', () => {
           page("http://base.url/path/3",
             {
               visit: function (frame) {
-                frame.src = 'https://account.bbc.com/signin?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F3';
+                frame.src = 'https://account.bbc.com/auth?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F3';
                 ${VISIT_OPTION_BODY}
               }
             }
@@ -244,14 +245,13 @@ describe('bbcA11y', () => {
           page("http://base.url/path/4",
             {
               visit: function (frame) {
-                frame.src = 'https://account.bbc.com/signin?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F4';
+                frame.src = 'https://account.bbc.com/auth?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F4';
                 ${VISIT_OPTION_BODY}
               }
             }
           )
         `;
         const matcher = getMinifiedMatcher(expectedOutput);
-
         bbcA11y.build();
 
         sandbox.assert.calledWith(
@@ -289,7 +289,7 @@ describe('bbcA11y', () => {
         page("http://base.url/path/3",
           {
             visit: function (frame) {
-              frame.src = 'https://account.bbc.com/signin?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F3';
+              frame.src = 'https://account.bbc.com/auth?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F3';
               ${VISIT_OPTION_BODY}
             },
             some: "option"
@@ -299,7 +299,7 @@ describe('bbcA11y', () => {
         page("http://base.url/path/4",
           {
             visit: function (frame) {
-              frame.src = 'https://account.bbc.com/signin?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F4';
+              frame.src = 'https://account.bbc.com/auth?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F4';
               ${VISIT_OPTION_BODY}
             },
             some: "option"
