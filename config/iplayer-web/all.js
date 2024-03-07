@@ -24,14 +24,10 @@ module.exports = {
     ...playback.paths,
     ...guide.paths,
     ...atoz.paths,
-    '/iplayer/watching',
-    '/iplayer/added',
     '/bbcfour/collections'
   ],
   signedInPaths: [
     ...bundles.signedInPaths,
-    ...myprogrammes.signedInPaths,
-    '/iplayer/watching',
-    '/iplayer/added'
+    ...myprogrammes.signedInPaths
   ]
 };
