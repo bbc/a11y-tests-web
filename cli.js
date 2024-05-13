@@ -24,7 +24,7 @@ async function runBbcA11yCli({ argv }) {
   buildBbcA11y();
 
   const { mode } = argv;
-  const runBbcA11y = mode === 'ci' ? runBbcA11yInCiMode : runBbcA11yOnHost;
+  const runBbcA11y = mode === 'ci' ? runBbcA11yOnHost : runBbcA11yOnHost;
 
   const bbcA11yExitCode = await runBbcA11y(argv);
 
