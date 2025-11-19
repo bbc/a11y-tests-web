@@ -8,6 +8,7 @@ function setPrivate(value) {
 }
 
 if (process.env.SAFE_PUBLISH !== '1') {
+  // eslint-disable-next-line no-console
   console.error('Direct publish blocked. Use "npm run safe:publish" instead.');
   process.exit(1);
 }
@@ -20,8 +21,10 @@ function restorePrivate() {
   cleanedUp = true;
   try {
     setPrivate(true);
+    // eslint-disable-next-line no-console
     console.log('Restored package.json private:true');
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error('Failed to restore package.json private:true', e);
   }
 }
@@ -36,6 +39,7 @@ process.on('SIGTERM', () => {
   process.exit(1);
 });
 process.on('uncaughtException', (err) => {
+  // eslint-disable-next-line no-console
   console.error(err);
   restorePrivate();
   process.exit(1);
@@ -45,6 +49,7 @@ try {
   setPrivate(false);
   execSync('npm run verify:release', { stdio: 'inherit' });
   execSync('npm publish --ignore-scripts=false', { stdio: 'inherit' });
+  // eslint-disable-next-line no-console
   console.log('Safe publish complete.');
 } catch (err) {
   process.exit(err.status || 1);
