@@ -2,18 +2,20 @@
 const fs = require('fs');
 const { execSync } = require('child_process');
 
+const pkgPath = './package.json';
+const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+
 function setPrivate(value) {
   pkg.private = value;
   fs.writeFileSync(pkgPath, JSON.stringify(pkg, null, 2) + '\n');
 }
 
-if (process.env.SAFE_PUBLISH !== '1') {
+if (process.env.PUBLISH_SAFE !== '1') {
   // eslint-disable-next-line no-console
-  console.error('Direct publish blocked. Use "npm run safe:publish" instead.');
+  console.error('Direct publish blocked. Use "npm run publish:safe" instead.');
   process.exit(1);
 }
-const pkgPath = './package.json';
-const pkg = JSON.parse(fs.readFileSync(pkgPath, 'utf8'));
+
 let cleanedUp = false;
 
 function restorePrivate() {
@@ -50,7 +52,7 @@ try {
   execSync('npm run verify:release', { stdio: 'inherit' });
   execSync('npm publish --ignore-scripts=false', { stdio: 'inherit' });
   // eslint-disable-next-line no-console
-  console.log('Safe publish complete.');
+  console.log('Publish safe complete.');
 } catch (err) {
   process.exit(err.status || 1);
 }
