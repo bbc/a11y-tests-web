@@ -1,5 +1,6 @@
 {
   "name": "@bbc/a11y-tests-web",
+  "private": true,
   "version": "6.6.1",
   "description": "Runs automated accessibility tests on a set of pages",
   "main": "index.js",
@@ -7,7 +8,7 @@
     "a11y-tests-web": "./cli.js"
   },
   "engines": {
-    "node": ">=10.0.0"
+    "node": "22.18.0"
   },
   "scripts": {
     "build:bbc-a11y": "node buildBbcA11y.js",
@@ -21,9 +22,9 @@
     "start:lighthouse:junit-headless": "A11Y_HEADLESS=true node runLighthouse.js",
     "start:lighthouse:headless": "A11Y_HEADLESS=true A11Y_PRETTY=true node runLighthouse.js",
     "lint": "npm run clean && eslint .",
-    "test": "mocha 'test/**/*.js'",
-    "posttest": "npm run lint",
-    "coverage": "nyc --reporter=lcov npm test && nyc report"
+    "test": "mocha 'test/**/*.js' && npm run lint",
+    "coverage": "nyc --reporter=lcov npm test && nyc report",
+    "publish:safe": "SAFE_PUBLISH=1 node ./scripts/guard-publish.js"
   },
   "author": "Andy Smith",
   "license": "Apache-2.0",
