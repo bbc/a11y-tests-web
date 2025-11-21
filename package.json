@@ -8,7 +8,7 @@
     "a11y-tests-web": "./cli.js"
   },
   "engines": {
-    "node": "22.18.0"
+    "node": ">=22.18.0"
   },
   "scripts": {
     "build:bbc-a11y": "node buildBbcA11y.js",
