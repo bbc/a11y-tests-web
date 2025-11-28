@@ -24,7 +24,8 @@
     "lint": "npm run clean && eslint .",
     "test": "mocha 'test/**/*.js' && npm run lint",
     "coverage": "nyc --reporter=lcov npm test && nyc report",
-    "publish:safe": "npx @bbc/iplayer-web-safe-publish"
+    "publish:safe": "npx @bbc/iplayer-web-safe-publish",
+    "verify:release": "npm run test"
   },
   "author": "Andy Smith",
   "license": "Apache-2.0",
