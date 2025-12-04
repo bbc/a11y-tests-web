@@ -22,7 +22,7 @@
     "start:lighthouse:junit-headless": "A11Y_HEADLESS=true node runLighthouse.js",
     "start:lighthouse:headless": "A11Y_HEADLESS=true A11Y_PRETTY=true node runLighthouse.js",
     "lint": "npm run clean && eslint .",
-    "test": "mocha 'test/**/*.js' && npm run lint",
+    "test": "mocha --exit 'test/**/*.js' && npm run lint",
     "coverage": "nyc --reporter=lcov npm test && nyc report",
     "publish:safe": "npx @bbc/iplayer-web-safe-publish",
     "verify:release": "npm run test"
