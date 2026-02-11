@@ -5,6 +5,4 @@ bbc-a11y-report.xml
 lighthouse-report.xml
 .nyc_output/
 coverage/
-
-
 *.tgz
