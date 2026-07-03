@@ -41,6 +41,7 @@
   "devDependencies": {
     "eslint": "^7.13.0",
     "eslint-config-iplayer": "^7.0.0",
+    "eslint-plugin-mocha": "^6.3.0",
     "harp-minify": "^0.4.0",
     "mocha": "^7.2.0",
     "nock": "^13.1.4",
