@@ -16,18 +16,55 @@ function getMinifiedMatcher(code) {
   };
 }
 
-const VISIT_OPTION_BODY = `
-  return new Promise(function (test) {
-    frame.onload = function () {
-      var loginPage = frame.contentDocument;
-      loginPage.getElementById('user-identifier-input').value = 'my-username';
-      loginPage.getElementById('submit-button').click();
-      loginPage.getElementById('password-input').value = 'my-password';
-      loginPage.getElementById('submit-button').click();
-      frame.onload = test
+function getVisitFunction(encodedUrl) {
+  return `visit: function (frame) {
+    function navigateToUrl(url) {
+      return new Promise(function (resolve) {
+        frame.onload = function () { frame.onload = null; resolve(); };
+        frame.src = url;
+      });
     }
-  })
-`;
+
+    function waitForElementById(id) {
+      return new Promise(function (resolve, reject) {
+        var start = Date.now();
+        (function poll() {
+          var doc = frame.contentDocument;
+          var el = doc && doc.getElementById(id);
+          if (el) { resolve(el); return; }
+          if (Date.now() - start > 15000) {
+            console.log('Timed out. Current document:', doc);
+            var href = doc ? doc.location.href : '(no document)';
+            reject(new Error('Timed out waiting for #' + id + ' at ' + href));
+            return;
+          }
+          setTimeout(poll, 100);
+        })();
+      });
+    }
+
+    function typeIntoElement(el, value) {
+      el.focus();
+      frame.contentDocument.execCommand('insertText', false, value);
+    }
+
+    return navigateToUrl('https://www.bbc.co.uk').then(function () {
+      return navigateToUrl('https://account.bbc.com/auth?ptrt=${encodedUrl}');
+    }).then(function () {
+      return waitForElementById('username');
+    }).then(function (user) {
+      typeIntoElement(user, 'my-username');
+      frame.contentDocument.getElementById('submit-button').click();
+      return waitForElementById('password');
+    }).then(function (pass) {
+      typeIntoElement(pass, 'my-password');
+      return new Promise(function (resolve) {
+        frame.onload = resolve;
+        frame.contentDocument.getElementById('submit-button').click();
+      });
+    });
+  }`;
+}
 
 describe('bbcA11y', () => {
 
@@ -235,19 +272,13 @@ describe('bbcA11y', () => {
 
           page("http://base.url/path/3",
             {
-              visit: function (frame) {
-                frame.src = 'https://account.bbc.com/auth?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F3';
-                ${VISIT_OPTION_BODY}
-              }
+              ${getVisitFunction('http%3A%2F%2Fbase.url%2Fpath%2F3')}
             }
           )
 
           page("http://base.url/path/4",
             {
-              visit: function (frame) {
-                frame.src = 'https://account.bbc.com/auth?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F4';
-                ${VISIT_OPTION_BODY}
-              }
+              ${getVisitFunction('http%3A%2F%2Fbase.url%2Fpath%2F4')}
             }
           )
         `;
@@ -288,20 +319,14 @@ describe('bbcA11y', () => {
 
         page("http://base.url/path/3",
           {
-            visit: function (frame) {
-              frame.src = 'https://account.bbc.com/auth?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F3';
-              ${VISIT_OPTION_BODY}
-            },
+            ${getVisitFunction('http%3A%2F%2Fbase.url%2Fpath%2F3')},
             some: "option"
           }
         )
 
         page("http://base.url/path/4",
           {
-            visit: function (frame) {
-              frame.src = 'https://account.bbc.com/auth?ptrt=http%3A%2F%2Fbase.url%2Fpath%2F4';
-              ${VISIT_OPTION_BODY}
-            },
+            ${getVisitFunction('http%3A%2F%2Fbase.url%2Fpath%2F4')},
             some: "option"
           }
         )
