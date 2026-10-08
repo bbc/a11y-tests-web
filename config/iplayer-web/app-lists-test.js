@@ -19,8 +19,6 @@ module.exports = {
   paths: [
     '/bbcone/a-z',
     '/iplayer/most-popular',
-    '/iplayer/categories/arts/a-z',
-    '/iplayer/categories/arts/most-recent',
     '/iplayer/search?q=east',
     '/iplayer/episodes/b006m86d'
   ]
